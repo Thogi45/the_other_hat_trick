@@ -1,8 +1,11 @@
 import java.util.ArrayList;
+import java.util.AbstractSet;
 import java.util.Scanner;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Collections;
+
 
 public class DemarrageJeu {
 	
@@ -134,8 +137,9 @@ public class DemarrageJeu {
 
     public void creerCarte( int nbreCartesCrees) {
     	this.nbreCartesCreees = nbreCartesCrees;
-    	HashSet<Prop> aProp = new HashSet<Prop>();
-    	HashSet<Trick> aTrick = new HashSet<Trick> ();
+    	boolean p1 = false;
+    	ArrayList<Prop> aProp = new ArrayList<Prop>();
+    	ArrayList<Trick> aTrick = new ArrayList<Trick> ();
      	if (nbreCartesCrees == 0) {
     		aProp.add(new Prop(0));
     		aProp.add(new Prop(1));
@@ -144,13 +148,49 @@ public class DemarrageJeu {
     		aProp.add(new Prop(2));
     		aProp.add(new Prop(3));
     		aProp.add(new Prop(4));
-    		
-    		
-    		
+    		Collections.shuffle(aProp);
+    		aTrick.add(new Trick(0));
+    		aTrick.add(new Trick(1));
+    		aTrick.add(new Trick(2));
+    		aTrick.add(new Trick(3));
+    		aTrick.add(new Trick(4));
+    		aTrick.add(new Trick(5));
+    		aTrick.add(new Trick(6));
+    		aTrick.add(new Trick(7));
+    		aTrick.add(new Trick(8));
+    		Collections.shuffle(aTrick);
+    		aTrick.add(new Trick(9));
     	}
-
+     	else {
+    		aProp.add(new Prop(0));
+    		aProp.add(new Prop(1));
+    		aProp.add(new Prop(2));
+    		aProp.add(new Prop(2));
+    		aProp.add(new Prop(2));
+    		aProp.add(new Prop(3));
+    		aProp.add(new Prop(4));
+    		Collections.shuffle(aProp);
+    		aTrick.add(new Trick(0));
+    		aTrick.add(new Trick(1));
+    		aTrick.add(new Trick(2));
+    		aTrick.add(new Trick(3));
+    		aTrick.add(new Trick(4));
+    		aTrick.add(new Trick(5));
+    		aTrick.add(new Trick(6));
+    		aTrick.add(new Trick(7));
+    		aTrick.add(new Trick(8));
+    		Collections.shuffle(aTrick);
+    		aTrick.add(new Trick(9));
+     	}
+     	Trick t1 = aTrick.get(9);
+     	System.out.println(aTrick.get(9).getNomtrick());
+     	Trick t2 = aTrick.get(0);
+     	System.out.println(aTrick.get(0).getNomtrick());
+     	
+    }
+     	
   
-    	}
+    	
     	
 
     

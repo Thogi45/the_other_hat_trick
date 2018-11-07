@@ -29,7 +29,10 @@ public class Trick extends Carte {
 			VALEURS[i] = nomProp;
 		}
 	}
-
+	public void ajouterCartes(int tricksAjoutes, int valeur) {
+		
+		
+	}
     public void realiserTrickenjeu() {
     }
 
@@ -51,6 +54,9 @@ public class Trick extends Carte {
 	public Trick(int valeur) {
 		super();
 		this.valeur = valeur;
+		if (this.valeur <= 9) {
+			this.creerTrickdeBase();
+		}
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -149,12 +155,24 @@ public class Trick extends Carte {
 		this.pointstricks = pointstricks;
 	}
 
-	public Prop[] getProppourtrick() {
-		return proppourtrick;
+
+	public int[] getProp1() {
+		return prop1;
 	}
 
-	public void setProppourtrick(Prop[] proppourtrick) {
-		this.proppourtrick = proppourtrick;
+	public void setProp1(int[] prop1) {
+		this.prop1 = prop1;
+	}
+
+	public int[] getProp2() {
+		return prop2;
+	}
+
+	/**
+	 * @param prop2 the prop2 to set
+	 */
+	public void setProp2(int[] prop2) {
+		this.prop2 = prop2;
 	}
 
 	public boolean isTrickreussi() {

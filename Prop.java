@@ -18,6 +18,12 @@ public class Prop extends Carte {
 		this.valeur = valeur;
 		
 	}
+	public void ajouterCartes(int cartesAjoutees, int valeur) {
+		int propsAjoutees = cartesAjoutees;
+		while (propsAjoutees > 0) {
+			
+		}
+	}
 
 	public boolean getIsFaceUp() {
 		return isFaceUp;
