@@ -122,6 +122,8 @@ public class Trick extends Carte {
 			this.prop2[0] = 4;
 		}
 	}
+	
+	// commentaire
 
 	public int getValeur() {
 		return valeur;
