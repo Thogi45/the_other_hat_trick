@@ -11,6 +11,8 @@ public class Trick extends Carte {
 	public final static int THEBUNCHOFCARROTS = 7;
 	public final static int THEVEGETABLEHATTRICK = 8;
 	public final static int THEOTHERHATTRICK = 9;
+	public final static int THEDOVEHATTRICK = 10;
+	public final static int THESALADFRUIT = 11;
 	
 	public static String[] VALEURS = {"The Pair of Rabbits", "The Hat Trick", "The Hungry Rabbit", "The Rabbit that didn't like Carrots", "The Carrot Hat Trick", "The Slightly Easier Hat Trick", "The Vegetable Patch","The Bunch of Carrots", "The Vegetable Hat Trick", "The Other Hat Trick"} ;
 	
@@ -126,6 +128,18 @@ public class Trick extends Carte {
 			this.nomtrick = VALEURS[this.valeur];
 			this.prop1[0] = 1;
 			this.prop2[0] = 4;
+		}
+		else if (this.valeur == 10) {
+			this.pointstricks = 5;
+			this.nomtrick = VALEURS[this.valeur];
+			this.prop1[0]= 5;
+			this.prop2[0] = 1;
+		}
+		else if (this.valeur == 11) {
+			this.pointstricks = 4;
+			this.nomtrick = VALEURS[this.valeur];
+			this.prop1[0]= 6;
+			this.prop2[0] = 5;
 		}
 	}
 	
