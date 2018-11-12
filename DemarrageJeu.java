@@ -125,24 +125,11 @@ public class DemarrageJeu {
     String str = sc2.nextLine();
     char reponse = str.charAt(0);
     while (OK == false) {
-    switch (reponse) {
-    case 'Y' :
-    jeu.setNbredeJoueurs(3);
-    System.out.println("\nAvant de commencer, nous avons des détails à mettre en place\nCombien il y a-t-il de joueurs réels et virtuels ? Attention, il ne peut y avoir que 3 joueurs maximum");
-    System.out.println("\nNombre de Joueurs Reels ?");
-    Scanner sc = new Scanner(System.in);
-    jeu.setNbredeJoueursR(sc.nextInt());
-    System.out.println("\nNombre de Joueurs Virtuels ?");
-    Scanner sc1 = new Scanner(System.in);
-    jeu.setNbredeJoueursV(sc1.nextInt());
-    if ((this.getNbreJoueursR()+this.getNbreJoueursV())==3) {
-    OK = true;
-    }
-    else {
-    System.out.println("Vous n'avez pas entré le bon nombre de joueurs.\nVeuillez recommencer");
-    
-    }
-    case 'N' :
+    if (reponse == 'Y' || reponse == 'y') {
+    	jeu.setNbredeJoueurs(3);
+    	OK = true;
+    	}
+    else if (reponse =='N'||reponse =='n') {
     int variante = 0;
     while (variante <= 0 || variante >= 4) {
     System.out.println("Il existe plusieurs variantes du jeu\nVoici les variantes possibles :\n1. Jouer encore à 3 joueurs mais augmenter le nombre de cartes par joueurs");
@@ -154,9 +141,8 @@ public class DemarrageJeu {
     jeu.jouerAvecVariantes(variante);
     }
     OK = true;
-    }    
     }
-   
+    }
     jeu.creerJoueurs();
     jeu.creerCartesdeBase();
     jeu.commencer();

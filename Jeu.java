@@ -10,11 +10,11 @@ public class Jeu {
 
     private int nbredecartes;
     
-    private int nbredeJoueursR;
+    private int nbredeJoueursR= 0;
     
-    private int nbredeJoueursV;
+    private int nbredeJoueursV=0;
     
-    private int nbredeJoueurs;
+    private int nbredeJoueurs=0;
     
     private int variante;
     
@@ -123,9 +123,15 @@ public class Jeu {
 	
 	public void jouerAvecVariantes( int variante) {
 		this.variante = variante;
-		if (variante == 1) {
+		if (variante == 3) {
+			System.out.println("Dans cette variante, vous ajoutez autant de joueurs et de cartes que vous voulez.");
+			System.out.println("\nA combien de joueurs voulez-vous jouer ?");
+			Scanner sc = new Scanner(System.in);
+	    	setNbredeJoueursR(sc.nextInt());
+		}
+		if (variante == 1 || variante == 3) {
 			System.out.println("Packs disponibles (Vous pouvez ajouter tous les packs) :\n");
-			System.out.println("Pack 1 (Props et Tricks de base x2");
+			System.out.println("Pack 1 (Props et Tricks de base x2)");
 			System.out.println("\nPack 2 (Nouveaux Tricks et Props)");
 			System.out.println("\nQuels packs d'extension voulez-vous ajouter ? (1, 2, 12, 122)");
 			Scanner sc1 = new Scanner(System.in);
@@ -164,9 +170,10 @@ public class Jeu {
 			}
 		}
 		if (variante == 2) {
-			
-		}
-		
+			System.out.println("Dans cette variante, vous ajoutez 3 nouveaux joueurs");
+			System.out.println("\nVous n'avez donc plus qu'une carte et il va vous falloir combiner avec les props de vos adversaires ou le prop du milieu");
+			this.setNbredeJoueurs(6);			
+		}	
 	}
 
 	public Jeu(int nbredecartes, int nbredeJoueursR, int nbredeJoueursV) {
@@ -185,13 +192,24 @@ public class Jeu {
     public void compterlesScores() {
     }
     
+    
     public void creerJoueurs() {
+    	int joueursR = this.nbredeJoueursR;
+    	int joueursV = this.nbredeJoueursV;
+    	while (this.nbredeJoueurs != (this.nbredeJoueursR+this.nbredeJoueursV)) {
+    	System.out.println("\nNombre de Joueurs Reels ?");
+    	Scanner sc = new Scanner(System.in);
+    	setNbredeJoueursR(getNbredeJoueursR()+sc.nextInt());
+    	System.out.println("\nNombre de Joueurs Virtuels ?");
+    	Scanner sc1 = new Scanner(System.in);
+    	setNbredeJoueursV(getNbredeJoueursV()+sc1.nextInt());
+    	}
     	if (this.nbredeJoueursV !=0) {
-       	for (int i=0; i < this.nbredeJoueursV ; i++ ) {
     		System.out.println("Quel est le niveau des joueurs\nFacile Moyen Difficile");
     		Scanner niveau = new Scanner(System.in);
     		String niv = niveau.nextLine();
     		char carac = niv.charAt(0);
+       	for (int i=joueursV; i < this.nbredeJoueursV ; i++ ) {
     		if (carac == 'F' || carac == 'f') {
     			this.joueurV.add(new JoueurVirtuel(new Facile()));
     		}
@@ -210,7 +228,7 @@ public class Jeu {
             	int i = 0;
             	int plusjeune[];
             	plusjeune = new int[this.getNbredeJoueursR()];
-        	for (int j=this.nbredeJoueursV; j<(this.nbredeJoueursR+this.nbredeJoueursV); j++) {
+        	for (int j=joueursR; j<(this.nbredeJoueursR); j++) {
         		System.out.println("Quel est le nom de joueur " + (j+1) + " ?");
         		Scanner nomJ = new Scanner(System.in);
         		String nom = nomJ.nextLine();
@@ -219,6 +237,7 @@ public class Jeu {
         		double age = ageJ.nextDouble();
         		this.joueurR.add(new JoueurReel(age, nom));
         		this.joueurR.get(j).setEstPremierAJouer(false);
+        		if (joueursR == 0) {
         		if (age < ageplusjeune) {
         			ageplusjeune = age ;
         			i = 0;
@@ -230,7 +249,8 @@ public class Jeu {
         		}
         		
         	}
-        	System.out.println(i);
+        	}
+        	System.out.println(ageplusjeune);
         	System.out.println(plusjeune.length);
         	int n = (int)(Math.random()*i);
         	this.joueurR.get(plusjeune[n]).setEstPremierAJouer(true);
