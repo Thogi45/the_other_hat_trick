@@ -127,7 +127,7 @@ public class Jeu {
 			System.out.println("Dans cette variante, vous ajoutez autant de joueurs et de cartes que vous voulez.");
 			System.out.println("\nA combien de joueurs voulez-vous jouer ?");
 			Scanner sc = new Scanner(System.in);
-	    	setNbredeJoueursR(sc.nextInt());
+	    	setNbredeJoueurs(sc.nextInt());
 		}
 		if (variante == 1 || variante == 3) {
 			System.out.println("Packs disponibles (Vous pouvez ajouter tous les packs) :\n");
