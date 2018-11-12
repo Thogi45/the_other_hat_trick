@@ -11,6 +11,8 @@ public class Trick extends Carte {
 	public final static int THEBUNCHOFCARROTS = 7;
 	public final static int THEVEGETABLEHATTRICK = 8;
 	public final static int THEOTHERHATTRICK = 9;
+	public final static int THEDOVEHATTRICK = 10;
+	public final static int THESALADFRUIT = 11;
 	
 	public static String[] VALEURS = {"The Pair of Rabbits", "The Hat Trick", "The Hungry Rabbit", "The Rabbit that didn't like Carrots", "The Carrot Hat Trick", "The Slightly Easier Hat Trick", "The Vegetable Patch","The Bunch of Carrots", "The Vegetable Hat Trick", "The Other Hat Trick"} ;
 	
@@ -29,7 +31,10 @@ public class Trick extends Carte {
 			VALEURS[i] = nomProp;
 		}
 	}
-
+	public void ajouterCartes(int tricksAjoutes, int valeur) {
+		
+		
+	}
     public void realiserTrickenjeu() {
     }
 
@@ -51,6 +56,9 @@ public class Trick extends Carte {
 	public Trick(int valeur) {
 		super();
 		this.valeur = valeur;
+		if (this.valeur <= 9) {
+			this.creerTrickdeBase();
+		}
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -121,6 +129,18 @@ public class Trick extends Carte {
 			this.prop1[0] = 1;
 			this.prop2[0] = 4;
 		}
+		else if (this.valeur == 10) {
+			this.pointstricks = 5;
+			this.nomtrick = VALEURS[this.valeur];
+			this.prop1[0]= 5;
+			this.prop2[0] = 1;
+		}
+		else if (this.valeur == 11) {
+			this.pointstricks = 4;
+			this.nomtrick = VALEURS[this.valeur];
+			this.prop1[0]= 6;
+			this.prop2[0] = 5;
+		}
 	}
 	
 	// commentaire
@@ -149,12 +169,24 @@ public class Trick extends Carte {
 		this.pointstricks = pointstricks;
 	}
 
-	public Prop[] getProppourtrick() {
-		return proppourtrick;
+
+	public int[] getProp1() {
+		return prop1;
 	}
 
-	public void setProppourtrick(Prop[] proppourtrick) {
-		this.proppourtrick = proppourtrick;
+	public void setProp1(int[] prop1) {
+		this.prop1 = prop1;
+	}
+
+	public int[] getProp2() {
+		return prop2;
+	}
+
+	/**
+	 * @param prop2 the prop2 to set
+	 */
+	public void setProp2(int[] prop2) {
+		this.prop2 = prop2;
 	}
 
 	public boolean isTrickreussi() {

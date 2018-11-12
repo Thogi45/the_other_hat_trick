@@ -6,8 +6,11 @@ public class Prop extends Carte {
     public final static int CARROTS = 2;
     public final static int THERABBIT = 3;
     public final static int THEOTHERRABBIT = 4;
+    public final static int THEDOVE = 5;
+    public final static int THEANANAS = 6;
+    public final static int THEAPPLE = 7;
 	
-	public static String[] VALEURS = {"The Lettuce", "The Hat", "Carrots", "The Rabbit", "The Other Rabbit"};
+	public static String[] VALEURS = {"The Lettuce", "The Hat", "Carrots", "The Rabbit", "The Other Rabbit", "The Dove", "The Ananas", "The Apple"};
 	
 	private int valeur;
 	private boolean isFaceUp;
@@ -17,6 +20,12 @@ public class Prop extends Carte {
 		super();
 		this.valeur = valeur;
 		
+	}
+	public void ajouterCartes(int cartesAjoutees, int valeur) {
+		int propsAjoutees = cartesAjoutees;
+		while (propsAjoutees > 0) {
+			
+		}
 	}
 
 	public boolean getIsFaceUp() {
