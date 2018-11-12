@@ -127,7 +127,7 @@ public class Jeu {
 			System.out.println("Dans cette variante, vous ajoutez autant de joueurs et de cartes que vous voulez.");
 			System.out.println("\nA combien de joueurs voulez-vous jouer ?");
 			Scanner sc = new Scanner(System.in);
-	    	setNbredeJoueursR(sc.nextInt());
+	    	setNbredeJoueurs(sc.nextInt());
 		}
 		if (variante == 1 || variante == 3) {
 			System.out.println("Packs disponibles (Vous pouvez ajouter tous les packs) :\n");
@@ -196,13 +196,18 @@ public class Jeu {
     public void creerJoueurs() {
     	int joueursR = this.nbredeJoueursR;
     	int joueursV = this.nbredeJoueursV;
-    	while (this.nbredeJoueurs != (this.nbredeJoueursR+this.nbredeJoueursV)) {
+    	int jR = 0, jV =0;
+    	while (this.nbredeJoueurs != (jR+jV)) {
     	System.out.println("\nNombre de Joueurs Reels ?");
     	Scanner sc = new Scanner(System.in);
-    	setNbredeJoueursR(getNbredeJoueursR()+sc.nextInt());
+    	int A = sc.nextInt();
+    	setNbredeJoueursR(getNbredeJoueursR()+A);
+    	jR = joueursR+A;
     	System.out.println("\nNombre de Joueurs Virtuels ?");
     	Scanner sc1 = new Scanner(System.in);
-    	setNbredeJoueursV(getNbredeJoueursV()+sc1.nextInt());
+    	A =  sc1.nextInt();
+    	setNbredeJoueursV(getNbredeJoueursV()+A);
+    	jV = joueursV+A;
     	}
     	if (this.nbredeJoueursV !=0) {
     		System.out.println("Quel est le niveau des joueurs\nFacile Moyen Difficile");
