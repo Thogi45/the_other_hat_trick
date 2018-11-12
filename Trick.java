@@ -15,7 +15,7 @@ public class Trick extends Carte {
 	public final static int THESALADFRUIT = 11;
 	
 	public static String[] VALEURS = {"The Pair of Rabbits", "The Hat Trick", "The Hungry Rabbit", "The Rabbit that didn't like Carrots", "The Carrot Hat Trick", "The Slightly Easier Hat Trick", "The Vegetable Patch","The Bunch of Carrots", "The Vegetable Hat Trick", "The Other Hat Trick"} ;
-	
+	// Test pour Git
 	private int valeur;
     private String nomtrick;
     private int pointstricks;
