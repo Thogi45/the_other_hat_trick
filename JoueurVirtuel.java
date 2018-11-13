@@ -5,6 +5,8 @@ public class JoueurVirtuel extends Joueur {
     private Strategie S1;
 
     private String nom;
+    
+
 
 	public JoueurVirtuel(Strategie s1) {
 		super();

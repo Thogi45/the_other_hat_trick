@@ -11,6 +11,16 @@ public class Joueur {
     private Trick tricksRealises;
 
     private boolean nouveauTrick;
+    
+    private boolean estPremierAJouer;
+    
+	public boolean isEstPremierAJouer() {
+		return estPremierAJouer;
+	}
+
+	public void setEstPremierAJouer(boolean estPremierAJouer) {
+		this.estPremierAJouer = estPremierAJouer;
+	}
 
 	public Joueur() {
 		super();

@@ -2,7 +2,6 @@
 public class JoueurReel extends Joueur {
     private double age;
     
-    private boolean estPremierAJouer;
 
     private String nom;
 
@@ -12,13 +11,7 @@ public class JoueurReel extends Joueur {
 		this.nom = nom;
 	}
 
-	public boolean isEstPremierAJouer() {
-		return estPremierAJouer;
-	}
 
-	public void setEstPremierAJouer(boolean estPremierAJouer) {
-		this.estPremierAJouer = estPremierAJouer;
-	}
 
 	public double getAge() {
 		return age;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -225,7 +226,15 @@ public class Jeu {
     			this.joueurV.add(new JoueurVirtuel( new Difficile()));
     		}
     		this.joueurV.get(i).setNom("ordi "+ (i+1));
-    	}}
+    		this.joueurV.get(i).setEstPremierAJouer(false);
+    		System.out.println(joueurV.get(i).isEstPremierAJouer());
+    	}
+   		if (this.nbredeJoueursR == 0) {
+   			int m = (int) Math.random()*this.nbredeJoueursV;
+   			this.joueurV.get(m).setEstPremierAJouer(true);
+   		}
+
+       	}
 
         	if (this.nbredeJoueursR !=0) {
             	double ageplusjeune = 200 ;
@@ -259,7 +268,11 @@ public class Jeu {
         	System.out.println(plusjeune.length);
         	int n = (int)(Math.random()*i);
         	this.joueurR.get(plusjeune[n]).setEstPremierAJouer(true);
+
     }
+        	this.joueur.addAll(joueurR);
+        	this.joueur.addAll(joueurV);
+
     }
     
     public void creerCartesdeBase() {
@@ -285,7 +298,23 @@ public class Jeu {
     	
     }
 	public void commencer() {
-
+		int i = this.trick.size();
+		System.out.println(i);
+		int j=0;
+		for (i=0; i<this.nbredeJoueurs;i=i+1) {
+			System.out.println(this.joueur.get(i).getNom());
+			System.out.println(this.joueur.get(i).isEstPremierAJouer());
+		}
+		
+		while (this.joueur.get(j).isEstPremierAJouer()==false && j<this.nbredeJoueurs) {
+			j = j+1;
+		}
+		if (j!=this.nbredeJoueurs) {
+			System.out.println(this.joueur.get(j).getNom());
+		}
+		if (this.joueur.get(j).isEstPremierAJouer()==true) {
+			System.out.println(this.joueur.get(j).getNom());
+		}
 
     }
 
