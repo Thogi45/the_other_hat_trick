@@ -223,7 +223,7 @@ public class Jeu {
     			this.joueurV.add(new JoueurVirtuel(new Moyen()));
     		}
     		else if (carac == 'D' || carac == 'd') {
-    			this.joueurV.add(new JoueurVirtuel( new Difficile()));
+    			this.joueurV.add(new JoueurVirtuel(new Difficile()));
     		}
     		this.joueurV.get(i).setNom("ordi "+ (i+1));
     		this.joueurV.get(i).setEstPremierAJouer(false);
@@ -297,6 +297,8 @@ public class Jeu {
 		this.trick.add(new Trick(9));
     	
     }
+    
+    
 	public void commencer() {
 		int i = this.trick.size();
 		System.out.println(i);

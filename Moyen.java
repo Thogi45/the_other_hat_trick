@@ -1,4 +1,5 @@
 
+
 public class Moyen implements Strategie {
 	
     public void fairejouerIA() {
