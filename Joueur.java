@@ -1,23 +1,40 @@
+import java.util.ArrayList;
 
-public class Joueur {
+public abstract class Joueur {
     private String nom;
+    
+    private int choixTrick;
 
     private int point;
 
+    private Jeu jeu; 
+    
     private Prop cartesChoisies;
 
-    private Prop cartesMain;
+    private ArrayList<Prop> Main = new ArrayList<Prop> ();
 
-    private Trick tricksRealises;
+    private ArrayList<Trick> trickARealiser = new ArrayList<Trick>();
+    
+    private ArrayList<Trick> tricksRealises = new ArrayList<Trick>();
 
     private boolean nouveauTrick;
     
     private boolean estPremierAJouer;
-    
+
+	public void setChoixTrick(int choixTrick) {
+		this.choixTrick = choixTrick;
+	}
+
 	public boolean isEstPremierAJouer() {
 		return estPremierAJouer;
 	}
 
+	public abstract void setJeu(Jeu jeu);
+	
+	public void setJeu1(Jeu jeu) {
+		this.jeu = jeu;
+	}
+	
 	public void setEstPremierAJouer(boolean estPremierAJouer) {
 		this.estPremierAJouer = estPremierAJouer;
 	}
@@ -25,6 +42,20 @@ public class Joueur {
 	public Joueur() {
 		super();
 
+	}
+	
+
+
+	public boolean setTrickARealiser(ArrayList<Trick> trickARealiser) {
+		this.trickARealiser = trickARealiser;
+		return false;
+	}
+
+	/**
+	 * @return the trickARealiser
+	 */
+	public ArrayList<Trick> getTrickARealiser() {
+		return trickARealiser;
 	}
 
 	public String getNom() {
@@ -50,23 +81,21 @@ public class Joueur {
 	public void setCartesChoisies(Prop cartesChoisies) {
 		this.cartesChoisies = cartesChoisies;
 	}
-
-	public Prop getCartesMain() {
-		return cartesMain;
+				
+	public void setCarteMain(Prop carteMain) {
+		this.Main.add(carteMain);
 	}
-
-	public void setCartesMain(Prop cartesMain) {
-		this.cartesMain = cartesMain;
+	
+	public String afficherMain() {
+		String Main = "Les cartes du Joueur sont :";
+		for (int i=0; i<this.Main.size();i++ ) {
+			Main = Main +"\n" + this.Main.get(i).toString();
+		}
+		return Main;
 	}
-
-	public Trick getTricksRealises() {
-		return tricksRealises;
-	}
-
-	public void setTricksRealises(Trick tricksRealises) {
-		this.tricksRealises = tricksRealises;
-	}
-
+	
+	public abstract ArrayList<String> jouer();
+	
 	public boolean isNouveauTrick() {
 		return nouveauTrick;
 	}

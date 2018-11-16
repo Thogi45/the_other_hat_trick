@@ -19,15 +19,39 @@ public class Jeu {
     
     private int variante;
     
-    public ArrayList<Trick> trick = new ArrayList<Trick> ();
+    private ArrayList<Trick> trickD = new ArrayList<Trick> ();
     
-    public ArrayList<Prop> prop = new ArrayList<Prop> ();
+    private ArrayList<Trick> trickP = new ArrayList<Trick> ();
+    
+    private ArrayList<Prop> prop = new ArrayList<Prop> ();
 
-    public ArrayList<Joueur> joueur = new ArrayList<Joueur> ();
+    private ArrayList<Joueur> joueur = new ArrayList<Joueur> ();
     
-    public ArrayList<JoueurVirtuel> joueurV = new ArrayList<JoueurVirtuel> ();
+    private ArrayList<JoueurVirtuel> joueurV = new ArrayList<JoueurVirtuel> ();
     
-    public ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
+    private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
+    
+    public Jeu getJeu() {
+    	return this;
+    }
+    
+    public void distribuerProps () {
+    	int nbreProps = this.prop.size();
+    	int nbreJoueur = this.joueur.size();
+    	int propsauC = nbreProps%nbreJoueur;
+    	int j=0;
+    	for (int i = 0; i<(nbreProps-propsauC); i++) { 			
+    		this.joueur.get(j).setCarteMain(this.prop.get(0));
+    		this.prop.remove(0);
+    		j++;
+    		if (j==nbreJoueur) {
+    			j=0;
+    		}
+    	}
+    	for (int k=0;k<propsauC;k++) {
+    		System.out.println(this.prop.get(k).toString());
+    	}
+    }
 
 	public int getNbredeJoueurs() {
 		return nbredeJoueurs;
@@ -37,12 +61,12 @@ public class Jeu {
 		this.nbredeJoueurs = nbredeJoueurs;
 	}
 
-	public ArrayList<Trick> getTrick() {
-		return trick;
+	public ArrayList<Trick> gettrickD() {
+		return trickD;
 	}
 
-	public void setTrick(ArrayList<Trick> trick) {
-		this.trick = trick;
+	public void settrickD(ArrayList<Trick> trickD) {
+		this.trickD = trickD;
 	}
 
 	public ArrayList<Prop> getProp() {
@@ -132,8 +156,8 @@ public class Jeu {
 		}
 		if (variante == 1 || variante == 3) {
 			System.out.println("Packs disponibles (Vous pouvez ajouter tous les packs) :\n");
-			System.out.println("Pack 1 (Props et Tricks de base x2)");
-			System.out.println("\nPack 2 (Nouveaux Tricks et Props)");
+			System.out.println("Pack 1 (Props et trickDs de base x2)");
+			System.out.println("\nPack 2 (Nouveaux trickDs et Props)");
 			System.out.println("\nQuels packs d'extension voulez-vous ajouter ? (1, 2, 12, 122)");
 			Scanner sc1 = new Scanner(System.in);
 			int extension = sc1.nextInt();
@@ -145,28 +169,22 @@ public class Jeu {
 				this.prop.add(new Prop(2));
 				this.prop.add(new Prop(3));
 				this.prop.add(new Prop(4));
-				this.trick.add(new Trick(0));
-				this.trick.add(new Trick(1));
-				this.trick.add(new Trick(2));
-				this.trick.add(new Trick(3));
-				this.trick.add(new Trick(4));
-				this.trick.add(new Trick(5));
-				this.trick.add(new Trick(6));
-				this.trick.add(new Trick(7));
-				this.trick.add(new Trick(8));	
+				for (int i = 0; i<9; i++) {
+					this.trickD.add(new Trick(i));
+					}	
 			}
 			if (extension == 2 || extension == 12 || extension == 122) {
 				this.prop.add(new Prop(5));
 				this.prop.add(new Prop(6));
 				this.prop.add(new Prop(7));
-				this.trick.add(new Trick(10));
-				this.trick.add(new Trick(11));
+				this.trickD.add(new Trick(10));
+				this.trickD.add(new Trick(11));
 				if (extension == 122) {
 					this.prop.add(new Prop(5));
 					this.prop.add(new Prop(6));
 					this.prop.add(new Prop(7));
-					this.trick.add(new Trick(10));
-					this.trick.add(new Trick(11));
+					this.trickD.add(new Trick(10));
+					this.trickD.add(new Trick(11));
 				}
 			}
 		}
@@ -227,7 +245,7 @@ public class Jeu {
     		}
     		this.joueurV.get(i).setNom("ordi "+ (i+1));
     		this.joueurV.get(i).setEstPremierAJouer(false);
-    		System.out.println(joueurV.get(i).isEstPremierAJouer());
+    		
     	}
    		if (this.nbredeJoueursR == 0) {
    			int m = (int) Math.random()*this.nbredeJoueursV;
@@ -265,7 +283,6 @@ public class Jeu {
         	}
         	}
         	System.out.println(ageplusjeune);
-        	System.out.println(plusjeune.length);
         	int n = (int)(Math.random()*i);
         	this.joueurR.get(plusjeune[n]).setEstPremierAJouer(true);
 
@@ -284,40 +301,60 @@ public class Jeu {
 		this.prop.add(new Prop(3));
 		this.prop.add(new Prop(4));
 		Collections.shuffle(this.prop);
-		this.trick.add(new Trick(0));
-		this.trick.add(new Trick(1));
-		this.trick.add(new Trick(2));
-		this.trick.add(new Trick(3));
-		this.trick.add(new Trick(4));
-		this.trick.add(new Trick(5));
-		this.trick.add(new Trick(6));
-		this.trick.add(new Trick(7));
-		this.trick.add(new Trick(8));
-		Collections.shuffle(this.trick);
-		this.trick.add(new Trick(9));
-    	
+		for (int i = 0; i<9; i++) {
+		this.trickD.add(new Trick(i));
+		}
+		Collections.shuffle(this.trickD);
+		this.trickD.add(new Trick(9));
+    	this.distribuerProps();
     }
     
     
-	public void commencer() {
-		int i = this.trick.size();
-		System.out.println(i);
+	public int commencer() {
 		int j=0;
-		for (i=0; i<this.nbredeJoueurs;i=i+1) {
-			System.out.println(this.joueur.get(i).getNom());
-			System.out.println(this.joueur.get(i).isEstPremierAJouer());
-		}
-		
 		while (this.joueur.get(j).isEstPremierAJouer()==false && j<this.nbredeJoueurs) {
 			j = j+1;
 		}
-		if (j!=this.nbredeJoueurs) {
-			System.out.println(this.joueur.get(j).getNom());
-		}
 		if (this.joueur.get(j).isEstPremierAJouer()==true) {
-			System.out.println(this.joueur.get(j).getNom());
+			System.out.println("La personne qui joue est : "+ this.joueur.get(j).getNom());
+			this.joueur.get(j).setJeu(this);
+			System.out.println(this.joueur.get(j).afficherMain());
+			this.joueur.get(j).setEstPremierAJouer(false);
+			if (j+1 == this.nbredeJoueurs){
+				this.joueur.get(0).setEstPremierAJouer(true);
+			   }
+			else {
+				this.joueur.get(j+1).setEstPremierAJouer(true);
+			}
 		}
-
+		System.out.println(this.trickD.get(0).getNomtrick());
+		this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
+		System.out.println(this.trickD.get(0).getNomtrick());
+		this.joueur.get(j).jouer();
+		return j;
     }
+	
+	
+	
+	public void piocherUneCarteTrick(boolean choix) {
+		if (choix == true) {
+		this.trickP.add(this.trickD.get(0));
+		this.trickD.remove(0);
+		}
+	}
+	
+	public ArrayList<Trick> mettreAJourLaPile() {
+		if (this.trickP.isEmpty()==true) {
+		System.out.println(this.trickD.get(0).getNomtrick());
+		this.trickP.add(this.trickD.get(0));
+		this.trickD.remove(0);
+		}
+		ArrayList<Trick> trickAFaire = new ArrayList<Trick>();
+		trickAFaire.add(this.trickP.get(this.trickP.size()-1));
+		trickAFaire.add(this.trickD.get(0));
+		return trickAFaire;
+		
+	}
+
 
 }
