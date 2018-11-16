@@ -46,7 +46,10 @@ public class JoueurReel extends Joueur {
 
 	public ArrayList<String> jouer() {
 		System.out.println(this.afficherMain());
-		System.out.println("Quel prop voulez-vous échanger ?");
+		System.out.println("Quel prop voulez-vous échanger ? (Attention à bien écrire le nom du prop)");
+		Scanner sc = new Scanner(System.in);
+		String reponse = sc.nextLine();
+		if (reponse.equals(this.))
 		System.out.println("Avec qui voulez-vous échanger votre carte ?");
 		
 		
