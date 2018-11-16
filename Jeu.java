@@ -3,6 +3,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
+
 public class Jeu {
     private String etat;
 
@@ -229,7 +231,7 @@ public class Jeu {
 
         	if (this.nbredeJoueursR !=0) {
             	double ageplusjeune = 200 ;
-            	System.out.println("Vous allez entrer le nom des Joueurs et leur âge");
+            	System.out.println("Vous allez entrer le nom des Joueurs et leur ï¿½ge");
             	int i = 0;
             	int plusjeune[];
             	plusjeune = new int[this.getNbredeJoueursR()];
@@ -237,7 +239,7 @@ public class Jeu {
         		System.out.println("Quel est le nom de joueur " + (j+1) + " ?");
         		Scanner nomJ = new Scanner(System.in);
         		String nom = nomJ.nextLine();
-        		System.out.println("Quel est son âge ?");
+        		System.out.println("Quel est son ï¿½ge ?");
         		Scanner ageJ = new Scanner(System.in);
         		double age = ageJ.nextDouble();
         		this.joueurR.add(new JoueurReel(age, nom));
@@ -284,9 +286,26 @@ public class Jeu {
 		this.trick.add(new Trick(9));
     	
     }
+    public void distribuerProp () {
+    	ArrayList<Joueur> arrJ = this.getJoueur();
+    	while (this.prop.size()>this.nbredeJoueurs) {
+    		for(int i=0; i<arrJ.size();i++) {
+    			Joueur j = arrJ.get(i);
+    			int iSizeProp = this.prop.size();
+    			Prop prop = this.prop.get(iSizeProp-1);
+    			j.getCartesMain().add(prop);
+    			this.removeProp(iSizeProp-1);
+    		}
+    			
+    	}
+    	
+    }
+	private void removeProp(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void commencer() {
-
-
     }
 
 }

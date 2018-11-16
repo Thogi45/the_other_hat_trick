@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Joueur {
     private String nom;
@@ -6,7 +7,7 @@ public class Joueur {
 
     private Prop cartesChoisies;
 
-    private Prop cartesMain;
+    private ArrayList<Prop> cartesMain;
 
     private Trick tricksRealises;
 
@@ -41,11 +42,11 @@ public class Joueur {
 		this.cartesChoisies = cartesChoisies;
 	}
 
-	public Prop getCartesMain() {
+	public ArrayList<Prop> getCartesMain() {
 		return cartesMain;
 	}
 
-	public void setCartesMain(Prop cartesMain) {
+	public void setCartesMain(ArrayList<Prop> cartesMain) {
 		this.cartesMain = cartesMain;
 	}
 
