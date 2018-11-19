@@ -49,7 +49,7 @@ public class JoueurVirtuel extends Joueur {
 		this.nom = nom;
 	}
 
-	public ArrayList<String> jouer() {
+	public Object[] jouer() {
 		S1.fairejouerIA();
 	}
     

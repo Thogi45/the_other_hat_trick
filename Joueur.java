@@ -70,6 +70,10 @@ public abstract class Joueur {
 		return point;
 	}
 
+	public ArrayList<Prop> getMain() {
+		return Main;
+	}
+
 	public void setPoint(int point) {
 		this.point = point;
 	}
@@ -94,7 +98,9 @@ public abstract class Joueur {
 		return Main;
 	}
 	
-	public abstract ArrayList<String> jouer();
+	
+	
+	public abstract Object[] jouer();
 	
 	public boolean isNouveauTrick() {
 		return nouveauTrick;

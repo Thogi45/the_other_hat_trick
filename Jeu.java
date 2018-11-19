@@ -330,10 +330,33 @@ public class Jeu {
 		System.out.println(this.trickD.get(0).getNomtrick());
 		this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
 		System.out.println(this.trickD.get(0).getNomtrick());
-		this.joueur.get(j).jouer();
+		this.gererActionsDeJeu(j);
 		return j;
     }
 	
+	public void gererActionsDeJeu(int j) {
+		this.afficherPlateau();
+		ArrayList<String> nomJ = new ArrayList<String> ();
+		for (int i =0; i < this.nbredeJoueurs;i++) {
+			if (j)
+			nomJ.add(this.joueur.get(i).getNom());
+		}
+		
+		
+
+		
+		}
+
+	
+
+	public void afficherPlateau() {
+		for (int i = 0; i<this.nbredeJoueurs; i++) {
+			System.out.println(this.joueur.get(i).getNom());
+			for (int j = 0; j<this.joueur.get(i).getMain().size();j++) {
+				this.joueur.get(i).getMain().get(j).afficherNom();
+			}
+		}
+	}
 	
 	
 	public void piocherUneCarteTrick(boolean choix) {

@@ -13,18 +13,25 @@ public class Prop extends Carte {
 	public static String[] VALEURS = {"The Lettuce", "The Hat", "Carrots", "The Rabbit", "The Other Rabbit", "The Dove", "The Ananas", "The Apple"};
 	
 	private int valeur;
-	private boolean isFaceUp;
+	private boolean isFaceUp =false;
     private String nomP;
     
 	public Prop(int valeur) {
 		super();
 		this.valeur = valeur;
+		this.nomP = VALEURS[valeur];
 		
 	}
 	public void ajouterCartes(int cartesAjoutees, int valeur) {
 		int propsAjoutees = cartesAjoutees;
 		while (propsAjoutees > 0) {
 			
+		}
+	}
+	
+	public void afficherNom() {
+		if (this.isFaceUp==true) {
+			System.out.println(this.nomP);
 		}
 	}
 
