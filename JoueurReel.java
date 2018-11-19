@@ -51,22 +51,23 @@ public class JoueurReel extends Joueur {
 		System.out.println(this.afficherMain());
 		boolean OK = false;
 		while (OK==false) {
-			valeurs = null;
 			System.out.println("Quel prop voulez-vous échanger ?");
 			System.out.println("\nEntrer la position de la carte à échanger avec un notre joueur");
 			Scanner sc = new Scanner(System.in);
 			int rep = sc.nextInt()-1;
-			if (rep >= this.getMain().size() || rep < 0) {
+			if (rep < this.getMain().size() && rep >= 0) {
 			valeurs[1] = rep;
 			}
 			System.out.println("Choisissez l'adversaire avec qui échanger votre prop");
 			Scanner sc1 = new Scanner(System.in);
 			String rep1 = sc1.nextLine();
-			valeurs[2] = rep1;
+			
+			valeurs[2] = (String) rep1;
+			
 			System.out.println("\nEntrer la position de la carte à choisir chez le joueur sélectionné");
 			Scanner sc2 = new Scanner(System.in);
 			int rep2 = sc.nextInt()-1;
-			if (rep2 >= this.getMain().size() || rep2 < 0) {
+			if (rep2 < this.getMain().size() && rep2 >= 0) {
 				valeurs[3] = rep2;
 				OK = true;
 				}

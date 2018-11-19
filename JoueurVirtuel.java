@@ -50,7 +50,7 @@ public class JoueurVirtuel extends Joueur {
 	}
 
 	public Object[] jouer() {
-		S1.fairejouerIA();
+		S1.fairejouerIA(this.getJeu(), this);
 	}
     
 	public static void main(String[] args) {

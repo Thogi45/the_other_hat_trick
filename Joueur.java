@@ -39,6 +39,12 @@ public abstract class Joueur {
 		this.estPremierAJouer = estPremierAJouer;
 	}
 
+	
+
+	public Jeu getJeu() {
+		return jeu;
+	}
+
 	public Joueur() {
 		super();
 

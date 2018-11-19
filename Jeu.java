@@ -338,14 +338,39 @@ public class Jeu {
 		this.afficherPlateau();
 		ArrayList<String> nomJ = new ArrayList<String> ();
 		for (int i =0; i < this.nbredeJoueurs;i++) {
-			if (j)
+			if (j != i) {
 			nomJ.add(this.joueur.get(i).getNom());
+			}
 		}
-		
-		
+		boolean OK = false;
+		Object[] infosSwitch = new Object[4];
+		while (OK == false) {
+			infosSwitch = this.joueur.get(j).jouer();
+			String nomJoueur = (String) infosSwitch[2];
+			System.out.println(nomJoueur);
+				if (nomJ.contains(nomJoueur)==true) {
+					OK = true;
+				}
 
-		
 		}
+		this.switcherProps(infosSwitch);
+		}
+	
+	public void switcherProps(Object[] infosSwitch) {
+		String joueurActuel = (String) infosSwitch[0];
+		String joueurEchange = (String) infosSwitch[2];
+		int posjoueurAct = (int) infosSwitch[1];
+		int posjoueurEch = (int) infosSwitch[3];
+		for (int j=0; j<this.nbredeJoueurs;j++) { 
+			if (joueurActuel.equals(this.joueur.get(j).getNom())) {
+				int A = j;
+			}
+			if (joueurEchange.equals(this.joueur.get(j).getNom())) {
+				int B = j;
+			}
+		}
+		
+	}
 
 	
 
