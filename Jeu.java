@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Iterator;
 
+import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
+
 public class Jeu {
     private String etat;
 
@@ -255,7 +257,7 @@ public class Jeu {
 
         	if (this.nbredeJoueursR !=0) {
             	double ageplusjeune = 200 ;
-            	System.out.println("Vous allez entrer le nom des Joueurs et leur âge");
+            	System.out.println("Vous allez entrer le nom des Joueurs et leur ï¿½ge");
             	int i = 0;
             	int plusjeune[];
             	plusjeune = new int[this.getNbredeJoueursR()];
@@ -263,7 +265,7 @@ public class Jeu {
         		System.out.println("Quel est le nom de joueur " + (j+1) + " ?");
         		Scanner nomJ = new Scanner(System.in);
         		String nom = nomJ.nextLine();
-        		System.out.println("Quel est son âge ?");
+        		System.out.println("Quel est son ï¿½ge ?");
         		Scanner ageJ = new Scanner(System.in);
         		double age = ageJ.nextDouble();
         		this.joueurR.add(new JoueurReel(age, nom));
