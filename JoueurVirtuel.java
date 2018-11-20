@@ -10,6 +10,10 @@ public class JoueurVirtuel extends Joueur {
     public void setJeu(Jeu jeu) {
     	this.setJeu1(jeu);
     }
+    
+	public void setCarteMain(Prop carteMain) {
+		this.getMain().add(carteMain);
+	}
 
 	public JoueurVirtuel(Strategie s1) {
 		super();
@@ -56,6 +60,8 @@ public class JoueurVirtuel extends Joueur {
 	public static void main(String[] args) {
 
 	}
-	
+	public ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre) {
+	}
+	}
 
-}
+

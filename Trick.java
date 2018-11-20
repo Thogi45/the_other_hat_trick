@@ -35,6 +35,35 @@ public class Trick extends Carte {
 			
 		}
 	}
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String proP1 = " Prop1 = " + prop1.get(0).getNomP();
+		if (prop1.size()>1 ) {
+		for (int i = 1; i<prop1.size();i++) {
+		 proP1 = proP1 + ", " + prop1.get(i).getNomP();
+		}
+		}
+		String proP2 = " Prop2 = " + prop2.get(0).getNomP();
+		if (prop2.size()>1) {
+		for (int j =1; j <prop2.size();j++) {
+			proP2 =  proP2 + ", " + prop2.get(j).getNomP();
+		}
+		}
+		return "Trick [" + nomtrick + ", points = " + pointstricks + "," + proP1 +","+ proP2+ "]";
+	}
+
+
+	public Trick() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void ajouterCartes(int tricksAjoutes, int valeur) {
 		
 	

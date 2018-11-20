@@ -6,31 +6,111 @@ public class JoueurReel extends Joueur {
     private double age;
     
 
-    private String nom;
+    
+	public void setCarteMain(Prop carteMain) {
+		this.getMain().add(carteMain);
+	}
 
 	public JoueurReel(double age, String nom) {
 		super();
 		this.age = age;
-		this.nom = nom;
+		super.setNom(nom);
+		
 	}
+	
+	public ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre) {
+		int k = this.getMain().size();
+		ArrayList<Prop> props = propCentre;
+		boolean OK = false;
+		props.addAll(getMain());
+		for (int i =0; i<props.size();i++) {
+			System.out.println((i+1) + ". " + props.get(i).getNomP());
+		}
+		int p = 0;
+		System.out.println("==================");
+		System.out.println("Vous devez choisir " + k + " cartes parmi toutes ces cartes.");
+		while (OK ==false) {
+			this.supprimerMain();
+			for (int j=1;j<=k;j++) {
+				System.out.println("==================");
+				System.out.println("Sélectionnez la position de la carte n°"+j+" à ajouter dans votre jeu.");
+				Scanner sc = new Scanner(System.in);
+				int pos = sc.nextInt()-1-p;
+				if (pos>=0 && pos <k) {
+					p++;
+					this.setCarteMain(props.get(pos));
+					props.remove(pos);
+				}
+			}
+			if (p == k) {
+				OK = true;
+			}
+			else {
+				p=0;
+				System.out.println("Vous avez fait une erreur, veuillez recommencer");
+			}
+		}
+		return props;
+		
+	}
+	
+	public void retournerCarte() {
+		int j = 0;
+		int pos = 0;
+		boolean OK=false;
+		for (int i = 0; i<this.getMain().size();i++) {
+			if (this.getMain().get(i).getIsFaceUp()) {
+				j=j+1;
+			}
+			else if (this.getMain().get(i).getIsFaceUp()== false) {
+				pos = i;
+			}
+			
+		}
+		if (j==(this.getMain().size()-1)) {
+			this.getMain().get(pos).setIsFaceUp(true);
+		}
+		else {
+			while (OK == false) {
+				System.out.println("Choisissez une carte à montrer (entrer une position)");
+				Scanner sc = new Scanner(System.in);
+				int choixProp = sc.nextInt() - 1;
+				System.out.println("==================");
+				if (this.getMain().get(choixProp).getIsFaceUp()==false) {
+					this.getMain().get(choixProp).setIsFaceUp(true);
+					OK = true;
+				}
+				else {
+					System.out.println("Vous avez choisi une carte déjà retournée ou une position qui n'existe pas");
+				}
+		}
+	}
+	}
+	
 	
 	public boolean setTrickARealiser(ArrayList<Trick> trickARealiser) {
 		super.setTrickARealiser(trickARealiser);
 		boolean OK = false;
 		boolean trickChoix =false;
 		while (OK == false) {
-		System.out.println("Voulez-vous réaliser le tour " + this.getTrickARealiser().get(0).getNomtrick());	
+		
+		System.out.println(this.getTrickARealiser().get(0).toString());
+		System.out.println("Voulez-vous réaliser ce tour ? (Oui ou Non)");	
 		Scanner sc = new Scanner(System.in);
 		String reponse = sc.nextLine();
 		char rep = reponse.charAt(0);
 		if (rep=='N'||rep=='n') {
-			System.out.println("Le nouveau tour est "+this.getTrickARealiser().get(1).getNomtrick());
+			System.out.println("=====================");
+			System.out.println("Le nouveau tour est donc :");
+			System.out.println(this.getTrickARealiser().get(1).toString());
 			this.setChoixTrick(1);
 			trickChoix = true;
 			OK = true;
 		}
 		else if (rep=='o'||rep=='O') {
-			System.out.println("Le tour à réaliser est donc "+ this.getTrickARealiser().get(0).getNomtrick());
+			System.out.println("=====================");
+			System.out.println("Le tour à réaliser est donc ");
+			System.out.println(this.getTrickARealiser().get(0).toString());
 			this.setChoixTrick(0);
 			trickChoix = false;
 			OK = true;
@@ -40,6 +120,7 @@ public class JoueurReel extends Joueur {
 			OK = false;
 		}
 		}
+		System.out.println("=====================");
 		return trickChoix;
 		
 	}
@@ -94,13 +175,6 @@ public class JoueurReel extends Joueur {
 		this.age = age;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 
     
 

@@ -21,6 +21,10 @@ public abstract class Joueur {
     
     private boolean estPremierAJouer;
 
+	public int getChoixTrick() {
+		return choixTrick;
+	}
+
 	public void setChoixTrick(int choixTrick) {
 		this.choixTrick = choixTrick;
 	}
@@ -39,7 +43,9 @@ public abstract class Joueur {
 		this.estPremierAJouer = estPremierAJouer;
 	}
 
-	
+	public void addTrickRealises(Trick trickReussi) {
+		this.tricksRealises.add(trickReussi);
+	}
 
 	public Jeu getJeu() {
 		return jeu;
@@ -96,17 +102,27 @@ public abstract class Joueur {
 		this.Main.add(carteMain);
 	}
 	
+	public void removeCarteMain(int index) {
+		this.Main.remove(index);
+	}
+	
 	public String afficherMain() {
-		String Main = "Les cartes du Joueur sont :";
-		for (int i=0; i<this.Main.size();i++ ) {
-			Main = Main +"\n" + this.Main.get(i).toString();
+		String Main = "Props : "+this.Main.get(0).toString();
+		for (int i=1; i<this.Main.size();i++ ) {
+			Main = Main +", " + this.Main.get(i).toString();
 		}
 		return Main;
 	}
 	
+	public void addMain(ArrayList<Prop> propsCentre) {
+		this.Main.addAll(propsCentre);
+	}
 	
+	public abstract void retournerCarte();
 	
 	public abstract Object[] jouer();
+	
+	public abstract ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre);
 	
 	public boolean isNouveauTrick() {
 		return nouveauTrick;
@@ -118,17 +134,22 @@ public abstract class Joueur {
 
 	public void voirCartes() {
     }
+	
+	public void supprimerMain() {
+		for (int i = 0; i<this.Main.size();i++) {
+			Main.remove(i);
+		}
+	}
 
-    public void retournerCarte() {
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "[" + nom  + ", " + this.afficherMain() + "]" + "\n=====================";
+	}
 
-    public void choisirSonTrick() {
-    }
+  
 
-    public void garderleTrick() {
-    }
-
-    public void mettreajourlamain() {
-    }
     
 }
