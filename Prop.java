@@ -13,18 +13,62 @@ public class Prop extends Carte {
 	public static String[] VALEURS = {"The Lettuce", "The Hat", "Carrots", "The Rabbit", "The Other Rabbit", "The Dove", "The Ananas", "The Apple"};
 	
 	private int valeur;
-	private boolean isFaceUp;
+	private boolean isFaceUp =false;
     private String nomP;
     
+    
+    
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nomP == null) ? 0 : nomP.hashCode());
+		result = prime * result + valeur;
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Prop other = (Prop) obj;
+		if (nomP == null) {
+			if (other.nomP != null)
+				return false;
+		} else if (!nomP.equals(other.nomP))
+			return false;
+		if (valeur != other.valeur)
+			return false;
+		return true;
+	}
 	public Prop(int valeur) {
 		super();
 		this.valeur = valeur;
+		this.nomP = VALEURS[valeur];
 		
 	}
 	public void ajouterCartes(int cartesAjoutees, int valeur) {
 		int propsAjoutees = cartesAjoutees;
 		while (propsAjoutees > 0) {
 			
+		}
+	}
+	
+	public void afficherNom(int j) {
+		if (this.isFaceUp==true) {
+			System.out.println((j+1)+". "+this.nomP);
+		}
+		else {
+			System.out.println((j+1)+". Non Visible.");
 		}
 	}
 

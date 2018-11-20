@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class JoueurVirtuel extends Joueur {
     private int niveaudujoueur;
@@ -5,13 +6,24 @@ public class JoueurVirtuel extends Joueur {
     private Strategie S1;
 
     private String nom;
+    
+    public void setJeu(Jeu jeu) {
+    	this.setJeu1(jeu);
+    }
+    
+	public void setCarteMain(Prop carteMain) {
+		this.getMain().add(carteMain);
+	}
 
 	public JoueurVirtuel(Strategie s1) {
 		super();
 		S1 = s1;
 	}
 
-	
+	public boolean setTrickARealiser(ArrayList<Trick> trickARealiser) {
+		this.setTrickARealiser(trickARealiser);
+		return false;
+	}
 	public JoueurVirtuel() {
 		super();
 	}
@@ -41,13 +53,15 @@ public class JoueurVirtuel extends Joueur {
 		this.nom = nom;
 	}
 
-	public void fairejouer() {
-		S1.fairejouerIA();
+	public Object[] jouer() {
+		S1.fairejouerIA(this.getJeu(), this);
 	}
     
 	public static void main(String[] args) {
 
 	}
-	
+	public ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre) {
+	}
+	}
 
-}
+
