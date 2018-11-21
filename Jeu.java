@@ -11,6 +11,9 @@ public class Jeu {
     private String etat;
 
     private String joueurEnCours;
+    
+    private String joueurEchange = "";
+    
 
     private int nbredecartes;
     
@@ -20,7 +23,9 @@ public class Jeu {
     
     private int nbredeJoueurs=0;
     
-    private int variante;
+    private int variante = 0;
+    
+    private boolean finPartie = false;
     
     private ArrayList<Trick> trickD = new ArrayList<Trick> ();
     
@@ -206,17 +211,7 @@ public class Jeu {
 		this.nbredeJoueursR = nbredeJoueursR;
 		this.nbredecartes = nbredecartes;
 	}
-
-    public void finir() {
-    }
-
-    public void classer() {
-    }
-
-    public void compterlesScores() {
-    }
-    
-    
+	
     public void creerJoueurs() {
     	int joueursR = this.nbredeJoueursR;
     	int joueursV = this.nbredeJoueursV;
@@ -261,7 +256,7 @@ public class Jeu {
 
         	if (this.nbredeJoueursR !=0) {
             	double ageplusjeune = 200 ;
-            	System.out.println("Vous allez entrer le nom des Joueurs et leur ï¿½ge");
+            	System.out.println("Vous allez entrer le nom des Joueurs et leur age");
             	int i = 0;
             	int plusjeune[];
             	plusjeune = new int[this.getNbredeJoueursR()];
@@ -269,7 +264,7 @@ public class Jeu {
         		System.out.println("Quel est le nom de joueur " + (j+1) + " ?");
         		Scanner nomJ = new Scanner(System.in);
         		String nom = nomJ.nextLine();
-        		System.out.println("Quel est son ï¿½ge ?");
+        		System.out.println("Quel est son age ?");
         		Scanner ageJ = new Scanner(System.in);
         		double age = ageJ.nextDouble();
         		this.joueurR.add(new JoueurReel(age, nom));
@@ -334,12 +329,12 @@ public class Jeu {
 			}
 		}
 		
-		boolean choix = this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
-		this.gererActionsDeJeu(j, choix);
+		this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
+		this.gererActionsDeJeu(j);
 		return j;
     }
 	
-	public void gererActionsDeJeu(int j, boolean choix) {
+	public void gererActionsDeJeu(int j) {
 		this.afficherPlateau();
 		ArrayList<String> nomJ = new ArrayList<String> ();
 		for (int i =0; i < this.nbredeJoueurs;i++) {
@@ -350,21 +345,54 @@ public class Jeu {
 		boolean OK = false;
 		Object[] infosSwitch = new Object[4];
 		while (OK == false) {
+			this.joueur.get(j).setVariante(this.variante);
 			infosSwitch = this.joueur.get(j).jouer();
 			String nomJoueur = (String) infosSwitch[2];
-				if (nomJ.contains(nomJoueur)==true) {
+				if (nomJ.contains(nomJoueur)==true  ) {
 					OK = true;
+				}
+				else if (nomJoueur.equals("PropsCentre")) {
+					
 				}
 
 		}
+		if (this.variante == 2) {
+			this.ajouterProps(infosSwitch);
+		}
+		else {
 		this.switcherProps(infosSwitch);
-		if (choix == false) {
+		}
+		if (this.finPartie == false) {
 		this.commencer();
 		}
 		else {
 			this.gererFinDePartie();
 		}
 		}
+	
+	public void ajouterProps(Object[] infosSwitch) {
+		String joueurActuel = (String) infosSwitch[0];
+		String joueurEchange = (String) infosSwitch[2];
+		this.joueurEchange = joueurEchange;
+		int A = 0;
+		int E = 0;
+		int posPropJA = (int) infosSwitch[1];
+		int posPropJE = (int) infosSwitch[3];
+		for (int j=0; j<this.nbredeJoueurs;j++) { 
+			if (joueurActuel.equals(this.joueur.get(j).getNom())) {
+				A = j;
+			}
+			if (joueurEchange.equals(this.joueur.get(j).getNom()) ) {
+				E = j;
+			}
+		}
+		this.joueur.get(A).setCarteMain(this.joueur.get(E).getMain().get(posPropJE));
+		this.joueur.get(E).removeCarteMain(posPropJE);
+		System.out.println("==================");
+		System.out.println(this.joueur.get(A).afficherMain());
+		this.testerTrick(A);
+		
+	}
 	
 	public void switcherProps(Object[] infosSwitch) {
 		String joueurActuel = (String) infosSwitch[0];
@@ -394,18 +422,41 @@ public class Jeu {
 	
 	public void gererFinDePartie() {
 		this.compterPoints();
-		System.out.println("====================");
 		System.out.println("Le jeu est terminé, le décompte également.");
-		System.out.println("Le gagnant est : ");
-		int gagnant = 0;
-		int points = 0;
-		for (int i = 0; i <this.joueur.size(); i++) {
-			if (this.joueur.get(i).getPoint() > points) {
-				points = this.joueur.get(i).getPoint();
-				gagnant = i;
+		System.out.println("Le classement est : ");
+		this.afficherClassement();
+		
+	}
+	
+	public void afficherClassement() {
+		ArrayList<Joueur> classement = new ArrayList<Joueur>();
+		classement.addAll(this.joueur);
+		int place = this.nbredeJoueurs;
+		int points = 4000;
+		int permut = 0;
+		int k = -1;
+		boolean permutOver = false;
+		while ( permutOver == false) {
+			points = 4000;
+			for (int i = 0; i < this.nbredeJoueurs-permut; i++) {
+				if (classement.get(i).getPoint() <= points) {
+					points = classement.get(i).getPoint();
+					k = i;
+				}
+			}
+			permut++;
+			classement.add(classement.get(k));
+			classement.remove(k);
+			if (permut == this.nbredeJoueurs) {
+				permutOver=true;
 			}
 		}
-		System.out.println(this.joueur.get(gagnant).getNom());
+		int clas = 1;
+		for (int j=this.nbredeJoueurs-1; j>=0 ; j--) {
+			System.out.println(clas + ". "+classement.get(j).toString2());
+			System.out.println(classement.get(j).afficherMain());
+			clas = clas + 1;
+		}
 	}
 	
 	
@@ -461,17 +512,53 @@ public class Jeu {
 			this.joueur.get(j).addTrickRealises(trickEnJeu);
 			this.trickP.remove(this.trickP.size()-1);
 			this.prop = this.joueur.get(j).melangerPropsCentre(this.prop);
+			if (this.variante == 2) {
+			this.gererMainsVariante2(this.joueur.get(j).donnerProp(this.prop, this.joueurEchange));
+			}
 		}
 		else {
+			this.gererVariante(this.variante, j);
 			System.out.println("==================");
 			System.out.println("Vous avez échoué");
 			System.out.println("==================");
+			if (this.finPartie == false) {
 			this.joueur.get(j).retournerCarte();
+			}
 		}
 	
 	}
-
 	
+	public void gererVariante(int variante, int j) {
+		if (this.variante == 2) {
+			int k = -1;
+			for (int i  = 0; i<this.nbredeJoueurs;i++) {
+				if (this.joueurEchange.equals(this.joueur.get(i).getNom())) {
+					k = i;
+				}
+			}
+			this.joueur.get(k).setCarteMain(this.joueur.get(j).getMain().get(1));
+			this.joueur.get(j).getMain().remove(1);
+		}
+	}
+
+	public void gererMainsVariante2 (boolean choixProp) {
+		int k = -1;
+		for (int i = 0; i<this.nbredeJoueurs;i++) {
+			if (this.joueur.get(i).getNom().equals(joueurEchange)) {
+				k = i;
+			}
+		}
+		
+		if (choixProp == true) {
+				this.joueur.get(k).setCarteMain(this.prop.get(0));
+				this.prop.remove(0);
+		}
+		else {
+			this.joueur.get(k).setCarteMain(this.prop.get(1));
+			this.prop.remove(1);
+		}
+		
+	}
 
 	public void afficherPlateau() {
 		for (int i = 0; i<this.nbredeJoueurs; i++) {
@@ -480,22 +567,27 @@ public class Jeu {
 				this.joueur.get(i).getMain().get(j).afficherNom(j);
 			}
 		}
+		if (this.variante == 2) {
+			for (int k = 0; k<this.prop.size();k++) {
+			System.out.println("PropsCentre :");
+			this.prop.get(k).afficherNom(k);
+			}
+		}
 	}
 	
 	
-	public boolean piocherUneCarteTrick(boolean choix) {
+	public void piocherUneCarteTrick(boolean choix) {
 		if (choix == true) {
 		this.trickP.add(this.trickD.get(0));
 		this.trickD.remove(0);
 		}
 		if (trickD.size() == 0) {
-			System.out.println("==================");
 			System.out.println("Ceci est le dernier tour !!!!!!");
 			System.out.println("==================");
-			return true;
+			this.finPartie = true;
+			
 		}
 		else {
-			return false;
 		}
 	}
 	
@@ -510,6 +602,7 @@ public class Jeu {
 		return trickAFaire;
 		
 	}
+	
 
 
 }
