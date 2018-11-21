@@ -18,6 +18,28 @@ public class JoueurReel extends Joueur {
 		
 	}
 	
+	public boolean donnerProp (ArrayList<Prop> propCentre, String echange) {
+		boolean OK = false;
+		int ech = -1;
+		while (OK == true) {
+		if (propCentre.size()>1) {
+		System.out.println("==================");
+		System.out.println("Quelle carte voulez-vous donner à " + echange + " ?" );
+		Scanner sc = new Scanner(System.in);
+		ech = sc.nextInt() -1;
+		if (ech == 0 || ech == 1) {
+			OK = true;
+		}
+		}
+		}
+		if (ech == 0) {
+			return true; 
+		}
+		else {
+			return false; 
+		}
+		}
+	
 	public ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre) {
 		int k = this.getMain().size();
 		ArrayList<Prop> props = propCentre;
@@ -72,6 +94,9 @@ public class JoueurReel extends Joueur {
 		}
 		if (j==(this.getMain().size()-1)) {
 			this.getMain().get(pos).setIsFaceUp(true);
+		}
+		else if (j == this.getMain().size()) {
+			System.out.println("Vos cartes sont déjà retournées.");
 		}
 		else {
 			while (OK == false) {
@@ -135,6 +160,8 @@ public class JoueurReel extends Joueur {
 		System.out.println(this.afficherMain());
 		boolean OK = false;
 		while (OK==false) {
+			
+			if (this.getVariante() != 2) {
 			System.out.println("Quel prop voulez-vous échanger ?");
 			System.out.println("\nEntrer la position de la carte à échanger avec un notre joueur");
 			Scanner sc = new Scanner(System.in);
@@ -142,20 +169,31 @@ public class JoueurReel extends Joueur {
 			if (rep < this.getMain().size() && rep >= 0) {
 			valeurs[1] = rep;
 			}
+			}
+			else {
+				valeurs[1] =0;
+			}
 			System.out.println("Choisissez l'adversaire avec qui échanger votre prop");
 			Scanner sc1 = new Scanner(System.in);
 			String rep1 = sc1.nextLine();
 			
 			valeurs[2] = (String) rep1;
-			
+			if (this.getVariante() != 2) {
 			System.out.println("\nEntrer la position de la carte à choisir chez le joueur sélectionné");
 			Scanner sc2 = new Scanner(System.in);
-			int rep2 = sc.nextInt()-1;
+			int rep2 = sc2.nextInt()-1;
 			if (rep2 < this.getMain().size() && rep2 >= 0) {
 				valeurs[3] = rep2;
 				OK = true;
 				}
+			}
+			else {
+				valeurs[3] = 0;
+				OK = true;
+			}
+			
 		}
+		
 		return valeurs;
 		}
 

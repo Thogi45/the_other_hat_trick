@@ -21,7 +21,16 @@ public abstract class Joueur {
     private boolean nouveauTrick;
     
     private boolean estPremierAJouer;
-
+    
+    private int variante; 
+    
+    public void setVariante(int variante) {
+    	this.variante = variante;
+    }
+    
+    public int getVariante() {
+    	return variante;
+    }
 	public int getChoixTrick() {
 		return choixTrick;
 	}
@@ -126,6 +135,9 @@ public abstract class Joueur {
 		return Main;
 	}
 	
+	public String toString2() {
+		return "[ " + this.nom + ", " + "Points = " + this.point + " ]";
+	}
 	public void addMain(ArrayList<Prop> propsCentre) {
 		this.Main.addAll(propsCentre);
 	}
@@ -152,6 +164,8 @@ public abstract class Joueur {
 		Main.removeAll(Main);
 
 	}
+	
+	public abstract boolean donnerProp(ArrayList<Prop> propCentre, String echange);
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
