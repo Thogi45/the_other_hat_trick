@@ -24,6 +24,10 @@ public abstract class Joueur {
 	public int getChoixTrick() {
 		return choixTrick;
 	}
+	
+	public void addPoint(int pt) {
+		this.point = this.point + pt;
+	}
 
 	public void setChoixTrick(int choixTrick) {
 		this.choixTrick = choixTrick;
@@ -47,6 +51,10 @@ public abstract class Joueur {
 		this.tricksRealises.add(trickReussi);
 	}
 
+	public ArrayList<Trick> getTricksRealises() {
+		return tricksRealises;
+	}
+
 	public Jeu getJeu() {
 		return jeu;
 	}
@@ -55,6 +63,8 @@ public abstract class Joueur {
 		super();
 
 	}
+	
+	
 	
 
 
@@ -136,9 +146,9 @@ public abstract class Joueur {
     }
 	
 	public void supprimerMain() {
-		for (int i = 0; i<this.Main.size();i++) {
-			Main.remove(i);
-		}
+		int a = this.Main.size();
+		Main.removeAll(Main);
+
 	}
 
 	/* (non-Javadoc)

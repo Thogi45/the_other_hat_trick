@@ -127,6 +127,7 @@ public class DemarrageJeu {
     while (OK == false) {
     if (reponse == 'Y' || reponse == 'y') {
     	jeu.setNbredeJoueurs(3);
+    	jeu.creerJoueurs();
     	OK = true;
     	}
     else if (reponse =='N'||reponse =='n') {
@@ -143,11 +144,7 @@ public class DemarrageJeu {
     OK = true;
     }
     }
-    jeu.creerJoueurs();
-    jeu.creerCartesdeBase();
-    jeu.commencer();
-    
-    
+   
    }
 
 }
