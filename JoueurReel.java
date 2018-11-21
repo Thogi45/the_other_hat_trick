@@ -22,6 +22,9 @@ public class JoueurReel extends Joueur {
 		int k = this.getMain().size();
 		ArrayList<Prop> props = propCentre;
 		boolean OK = false;
+		for (int i = 0; i<this.getMain().size(); i++) {
+			this.getMain().get(i).setIsFaceUp(false);
+		}
 		props.addAll(getMain());
 		for (int i =0; i<props.size();i++) {
 			System.out.println((i+1) + ". " + props.get(i).getNomP());

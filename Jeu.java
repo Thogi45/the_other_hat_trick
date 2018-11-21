@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Iterator;
 
-import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
+
 
 import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
 
@@ -53,7 +53,7 @@ public class Jeu {
     			j=0;
     		}
     	}
-
+    	this.commencer();
     }
 
 	public int getNbredeJoueurs() {
@@ -158,6 +158,9 @@ public class Jeu {
 	    	setNbredeJoueurs(sc.nextInt());
 		}
 		if (variante == 1 || variante == 3) {
+			if (variante == 1) {
+				this.setNbredeJoueurs(3);
+			}
 			System.out.println("Packs disponibles (Vous pouvez ajouter tous les packs) :\n");
 			System.out.println("Pack 1 (Props et trickDs de base x2)");
 			System.out.println("\nPack 2 (Nouveaux trickDs et Props)");
@@ -195,7 +198,8 @@ public class Jeu {
 			System.out.println("Dans cette variante, vous ajoutez 3 nouveaux joueurs");
 			System.out.println("\nVous n'avez donc plus qu'une carte et il va vous falloir combiner avec les props de vos adversaires ou le prop du milieu");
 			this.setNbredeJoueurs(6);			
-		}	
+		}
+		this.creerJoueurs();
 	}
 
 	public Jeu(int nbredecartes, int nbredeJoueursR, int nbredeJoueursV) {
@@ -293,6 +297,7 @@ public class Jeu {
         	this.joueur.addAll(joueurR);
         	this.joueur.addAll(joueurV);
         	System.out.println("=============================");
+        	this.creerCartesdeBase();
 
     }
     
@@ -310,7 +315,7 @@ public class Jeu {
 		}
 		Collections.shuffle(this.trickD);
 		this.trickD.add(new Trick(9));
-    	this.distribuerProps();
+		this.distribuerProps();
     }
     
     
@@ -331,13 +336,13 @@ public class Jeu {
 			}
 		}
 		
-		this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
-		this.gererActionsDeJeu(j);
+		boolean choix = this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
+		this.gererActionsDeJeu(j, choix);
 		return j;
     }
 
 	
-	public void gererActionsDeJeu(int j) {
+	public void gererActionsDeJeu(int j, boolean choix) {
 		this.afficherPlateau();
 		ArrayList<String> nomJ = new ArrayList<String> ();
 		for (int i =0; i < this.nbredeJoueurs;i++) {
@@ -356,8 +361,12 @@ public class Jeu {
 
 		}
 		this.switcherProps(infosSwitch);
-		
+		if (choix == false) {
 		this.commencer();
+		}
+		else {
+			this.gererFinDePartie();
+		}
 		}
 	
 	public void switcherProps(Object[] infosSwitch) {
@@ -386,8 +395,41 @@ public class Jeu {
 		this.testerTrick(A);
 	}
 	
+	public void gererFinDePartie() {
+		this.compterPoints();
+		System.out.println("====================");
+		System.out.println("Le jeu est terminé, le décompte également.");
+		System.out.println("Le gagnant est : ");
+		int gagnant = 0;
+		int points = 0;
+		for (int i = 0; i <this.joueur.size(); i++) {
+			if (this.joueur.get(i).getPoint() > points) {
+				points = this.joueur.get(i).getPoint();
+				gagnant = i;
+			}
+		}
+		System.out.println(this.joueur.get(gagnant).getNom());
+	}
+	
 	
 	public void compterPoints() {
+		boolean OK = false ;
+		if (this.trickP.get(this.trickP.size()-1).getValeur()==9) {
+			OK = true;
+		}
+		for (int j = 0; j < this.nbredeJoueurs; j++) {
+			for (int i = 0; i <this.joueur.get(j).getTricksRealises().size();i++) {
+				this.joueur.get(j).addPoint(this.joueur.get(j).getTricksRealises().get(i).getPointstricks());
+			}
+			if (OK == true) {
+				for (int k = 0; k < this.joueur.get(j).getMain().size(); k++) {
+					if (this.joueur.get(j).getMain().get(k).getValeur() == 1 || this.joueur.get(j).getMain().get(k).getValeur() == 4) {
+						this.joueur.get(j).addPoint(-3);
+					}
+				}
+			}
+		}
+		
 		
 	}
 	
@@ -444,10 +486,19 @@ public class Jeu {
 	}
 	
 	
-	public void piocherUneCarteTrick(boolean choix) {
+	public boolean piocherUneCarteTrick(boolean choix) {
 		if (choix == true) {
 		this.trickP.add(this.trickD.get(0));
 		this.trickD.remove(0);
+		}
+		if (trickD.size() == 0) {
+			System.out.println("==================");
+			System.out.println("Ceci est le dernier tour !!!!!!");
+			System.out.println("==================");
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
