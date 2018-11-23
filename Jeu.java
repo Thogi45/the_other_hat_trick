@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 
 
-import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
+//import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
 
 public class Jeu {
     private String etat;
@@ -218,17 +218,18 @@ public class Jeu {
     	int joueursR = this.nbredeJoueursR;
     	int joueursV = this.nbredeJoueursV;
     	int jR = 0, jV =0;
+    	
     	while (this.nbredeJoueurs != (jR+jV)) {
     	System.out.println("\nNombre de Joueurs Reels ?");
     	Scanner sc = new Scanner(System.in);
     	int A = sc.nextInt();
-    	setNbredeJoueursR(getNbredeJoueursR()+A);
+    	setNbredeJoueursR(A);
     	jR = joueursR+A;
     	System.out.println("\nNombre de Joueurs Virtuels ?");
     	Scanner sc1 = new Scanner(System.in);
-    	A =  sc1.nextInt();
-    	setNbredeJoueursV(getNbredeJoueursV()+A);
-    	jV = joueursV+A;
+    	int B =  sc1.nextInt();
+    	setNbredeJoueursV(B);
+    	jV = joueursV+B;
     	}
     	if (this.nbredeJoueursV !=0) {
     		System.out.println("Quel est le niveau des joueurs\nFacile Moyen Difficile");
@@ -345,6 +346,9 @@ public class Jeu {
 			nomJ.add(this.joueur.get(i).getNom());
 			}
 		}
+		if (this.variante==2) {
+			nomJ.add("PropsCentre");
+		}
 		boolean OK = false;
 		Object[] infosSwitch = new Object[4];
 		while (OK == false) {
@@ -354,10 +358,6 @@ public class Jeu {
 				if (nomJ.contains(nomJoueur)==true  ) {
 					OK = true;
 				}
-				else if (nomJoueur.equals("PropsCentre")) {
-					
-				}
-
 		}
 		if (this.variante == 2) {
 			this.ajouterProps(infosSwitch);
