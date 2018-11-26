@@ -51,6 +51,7 @@ public class JoueurReel extends Joueur {
 		for (int i =0; i<props.size();i++) {
 			System.out.println((i+1) + ". " + props.get(i).getNomP());
 		}
+		int k1 = props.size();
 		int p = 0;
 		System.out.println("==================");
 		System.out.println("Vous devez choisir " + k + " cartes parmi toutes ces cartes.");
@@ -61,7 +62,7 @@ public class JoueurReel extends Joueur {
 				System.out.println("Sélectionnez la position de la carte n°"+j+" à ajouter dans votre jeu.");
 				Scanner sc = new Scanner(System.in);
 				int pos = sc.nextInt()-1-p;
-				if (pos>=0 && pos <k) {
+				if (pos>=0 && pos <k1) {
 					p++;
 					this.setCarteMain(props.get(pos));
 					props.remove(pos);
@@ -72,6 +73,10 @@ public class JoueurReel extends Joueur {
 			}
 			else {
 				p=0;
+				props.addAll(getMain());
+				for (int i =0; i<props.size();i++) {
+					System.out.println((i+1) + ". " + props.get(i).getNomP());
+				}
 				System.out.println("Vous avez fait une erreur, veuillez recommencer");
 			}
 		}

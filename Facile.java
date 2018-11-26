@@ -1,86 +1,57 @@
 import java.util.ArrayList;
 
-import java.util.Random;
-
-
 public class Facile implements Strategie {
 
-private JoueurVirtuel joueur;
+	private Jeu jeuActuel;
 
-private Jeu jeuActuel;
+	public void setJeu(Jeu jeuActuel) {
+		this.jeuActuel = jeuActuel;
+	}
 
-public void jouerStra(JoueurVirtuel joueur, Jeu jeuActuel) {
-
-this.joueur = joueur;
-
-this.jeuActuel = jeuActuel;
+	public Jeu getJeu() {
+		return this.jeuActuel;
+	}
 
 
-this.choisirTrickStra(joueur, jeuActuel);
 
-this.preparePropStra(joueur, jeuActuel );
+@Override
+public Object[] fairejouerIA(Joueur joueurA) {
+	Object[] valeurs; 
+	valeurs = new Object[4];
+	valeurs[0] = (String) joueurA.getNom();
+	boolean OK = false;
+	int k=-1;
+	int posA = (int) Math.round(Math.random()*(joueurA.getMain().size()-1));
+	valeurs[1] = (int) posA;
+	while (OK == false) {
+	k = (int) Math.round(Math.random()*(jeuActuel.getNbredeJoueurs()-1));
+	if ((jeuActuel.getJoueur().get(k).getNom().equals(joueurA.getNom()))==false) {
+		OK = true;
+	}
+	
+	}
+	valeurs[2] = (String) jeuActuel.getJoueur().get(k).getNom();
+	int posB =(int) Math.round(Math.random());
+	valeurs[3] = (int) posB;
+	return valeurs;
+}
+
+@Override
+public int choisirTrickIA(ArrayList<Trick> trickPossible, Joueur j1) {
+	int k = (int) Math.round(Math.random());
+	return k;
 
 }
 
-private void preparePropStra(JoueurVirtuel joueur, Jeu jeuActuel) {
-
-
-public void choisirTrickStra (JoueurVirtuel joueur, Jeu jeuActuel) {
-
-int iTrickChoisi ;
-
-Random rd = new Random();
-
-iTrickChoisi = rd.nextInt(1);
-
-joueur.setChoixTrick(iTrickChoisi);
-
-System.out.println( joueur.getNom()+ " have choose Trick to perform : " + joueur.getTrickARealiser().get(iTrickChoisi).getNomtrick());
-
-//set la position de cartemain choisi
-
-Random rd1 = new Random();
-
-int iPropChoisi =  rd1.nextInt(jeuActuel.getProp().size()%jeuActuel.getJoueur().size());
-
-Prop pPropChoisi = joueur.getMain().get(iPropChoisi);
-
-System.out.println( joueur.getNom()+ "a choisi Propmain à changer:" + joueur.getMain().get(iPropChoisi).getNomP());
-
-
-//choisir la joueur a changer la carte
-
-//ajouter ID joueur!!!
-
-int iIdJoueurChoisi  =0 ;
-
-while ((iIdJoueurChoisi == 0)|(iIdJoueurChoisi == joueur.getIdJoueur()) ) {
-
-iIdJoueurChoisi = rd1.nextInt(jeuActuel.getJoueur().size());
-
-System.out.println(iIdJoueurChoisi);
-
+@Override
+public int retournerCarteIA() {
+	return (int) Math.round(Math.random()*(jeuActuel.getJoueur().get(0).getMain().size()-1));
 }
 
-//choisir la carte de joueur choisi
-
-Joueur p = jeuActuel.TrouverJoueurParId(iIdJoueurChoisi);
-
-jeuActuel.setJoueurChoisi(p);
-
-int iAutrePropChoisi =  rd.nextInt(jeuActuel.getProp().size()%jeuActuel.getJoueur().size());
-
-Prop pAutrePropChoisi = jeuActuel.getJoueurChoisi().getMain().get(iAutrePropChoisi);
-
-
-jeuActuel.getJoueur().setMain(iPropChoisi, pAutrePropChoisi);
-
-jeuActuel.getJoueurChoisi().setMain(iAutrePropChoisi, pPropChoisi);
-
-jeuActuel.setMain(joueur.getMain());
-
-System.out.println(joueur.getNom() + " has exchanged the props of " + p.getNom());
-
+public int melangerPropsCentreIA(ArrayList<Prop> props, int pos) {
+	int k = (int) Math.round(Math.random()*(props.size()-1));
+	return k;
+}
 
 
 

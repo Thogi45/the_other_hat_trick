@@ -339,6 +339,7 @@ public class Jeu {
 
 	
 	public void gererActionsDeJeu(int j) {
+		this.joueur.get(j).setJeu(this);
 		this.afficherPlateau();
 		ArrayList<String> nomJ = new ArrayList<String> ();
 		for (int i =0; i < this.nbredeJoueurs;i++) {
@@ -373,12 +374,19 @@ public class Jeu {
 		}
 		}
 	
+	/**
+	 * @return the trickP
+	 */
+	public ArrayList<Trick> getTrickP() {
+		return trickP;
+	}
+
 	public void ajouterProps(Object[] infosSwitch) {
 		String joueurActuel = (String) infosSwitch[0];
 		String joueurEchange = (String) infosSwitch[2];
 		this.joueurEchange = joueurEchange;
 		int A = 0;
-		int E = 0;
+		int E = -1;
 		int posPropJA = (int) infosSwitch[1];
 		int posPropJE = (int) infosSwitch[3];
 		for (int j=0; j<this.nbredeJoueurs;j++) { 
@@ -389,8 +397,12 @@ public class Jeu {
 				E = j;
 			}
 		}
+		if (E== -1) {
+			this.joueur.get(A).setCarteMain(this.prop.get(0));
+		}
+		else {
 		this.joueur.get(A).setCarteMain(this.joueur.get(E).getMain().get(posPropJE));
-		this.joueur.get(E).removeCarteMain(posPropJE);
+		}
 		System.out.println("==================");
 		System.out.println(this.joueur.get(A).afficherMain());
 		this.testerTrick(A);
@@ -532,17 +544,11 @@ public class Jeu {
 	}
 	
 	public void gererVariante(int variante, int j) {
-		if (this.variante == 2) {
-			int k = -1;
-			for (int i  = 0; i<this.nbredeJoueurs;i++) {
-				if (this.joueurEchange.equals(this.joueur.get(i).getNom())) {
-					k = i;
-				}
-			}
-			this.joueur.get(k).setCarteMain(this.joueur.get(j).getMain().get(1));
+		if (this.variante==2) {
 			this.joueur.get(j).getMain().remove(1);
 		}
 	}
+	
 
 	public void gererMainsVariante2 (boolean choixProp) {
 		int k = -1;
