@@ -1,8 +1,19 @@
+ package Modele;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
+import Carte.Prop;
+import Carte.Trick;
+import Joueur.Difficile;
+import Joueur.Facile;
+import Joueur.Joueur;
+import Joueur.JoueurReel;
+import Joueur.JoueurVirtuel;
+import Joueur.Moyen;
+
 import java.util.Iterator;
 
 

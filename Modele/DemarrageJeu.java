@@ -1,6 +1,10 @@
+package Modele;
 import java.util.ArrayList;
 import java.util.AbstractSet;
 import java.util.Scanner;
+
+import Carte.Trick;
+
 import java.util.List;
 import java.util.HashSet;
 import java.util.Iterator;

@@ -1,6 +1,8 @@
+package Carte;
 
 public abstract class Carte {
     private String nom;
+    // Tets
 
     public abstract void melanger();
     

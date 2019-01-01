@@ -1,3 +1,5 @@
+package Joueur;
+import Modele.Jeu;
 
 public class Difficile implements Strategie {
 	

@@ -1,4 +1,9 @@
+package Joueur;
 import java.util.ArrayList;
+
+import Carte.Prop;
+import Carte.Trick;
+import Modele.Jeu;
 
 public class Facile implements Strategie {
 

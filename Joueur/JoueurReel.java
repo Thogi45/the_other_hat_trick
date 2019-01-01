@@ -1,5 +1,10 @@
+package Joueur;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Carte.Prop;
+import Carte.Trick;
+import Modele.Jeu;
 
 
 public class JoueurReel extends Joueur {

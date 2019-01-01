@@ -1,3 +1,4 @@
+package Carte;
 import java.util.Scanner;
 
 public class Prop extends Carte {
