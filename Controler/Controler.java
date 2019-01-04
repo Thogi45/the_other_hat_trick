@@ -10,6 +10,8 @@ public class Controler {
 		this.jeu = jeu;
 		
 		
+		
+		
 	}
 
 	public Jeu getJeu() {

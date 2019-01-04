@@ -37,12 +37,7 @@ public class Test {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1500, 1000);
+		frame.setBounds(100, 100, 550, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 175, 123);
-		frame.getContentPane().add(panel);
 	}
 }

@@ -106,6 +106,8 @@ public class MainGraphique implements Observer {
 			// TODO Auto-generated method stub
 			
 		}
+		
+		
 
 
 	}

@@ -54,6 +54,7 @@ public class Jeu  extends Observable implements Runnable {
     
     private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
     
+     
     public Jeu getJeu() {
     	return this;
     }
@@ -226,6 +227,8 @@ public class Jeu  extends Observable implements Runnable {
 		this.nbredeJoueursR = nbredeJoueursR;
 		this.nbredecartes = nbredecartes;
 	}
+	
+	
 	
     public void creerJoueurs() {
     	int joueursR = this.nbredeJoueursR;
