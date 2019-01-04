@@ -1,15 +1,18 @@
 package Controler;
 
 import Modele.Jeu;
+import Vue.MainGraphique;
 
 public class Controler {		
-		private Jeu jeu;
+	private Jeu jeu;
 
-		public Controler (Jeu recentJeu) {
-			this.jeu = recentJeu;
-				}
+	public Controler (Jeu jeu) {
+		this.jeu = jeu;
+		
+		
+	}
 
-		public Jeu getJeu() {
-			return jeu;
-		}
-}
+	public Jeu getJeu() {
+		return jeu;
+	}
+	}

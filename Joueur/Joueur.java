@@ -1,11 +1,12 @@
 package Joueur;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import Carte.Prop;
 import Carte.Trick;
 import Modele.Jeu;
 
-public abstract class Joueur {
+public abstract class Joueur extends Observable{
     private String nom;
     
     private int choixTrick;
