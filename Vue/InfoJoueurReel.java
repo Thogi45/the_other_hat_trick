@@ -109,13 +109,10 @@ public class InfoJoueurReel extends JFrame {
 				container.add(nomField);
 				container.add(new JLabel("Veuillez entrer ton age"));
 				container.add(spAgeJoueur);
-<<<<<<< HEAD
+
 				container.add(new JLabel("Veuillez choisir ton niveau"));
 				 container.add(tempPanel);
-=======
-				container.add(new JLabel("Veuillez choisir ton vineau"));
-				container.add(tempPanel);
->>>>>>> cdd44802b5a231e1eadc7fdf72f7860d16239cf7
+
 				
 				container.add(new JLabel());
 				
