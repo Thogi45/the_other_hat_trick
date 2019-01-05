@@ -16,7 +16,7 @@ public class Prop extends Carte {
 	private int valeur;
 	private boolean isFaceUp =false;
     private String nomP;
-    private String[] IMAGE = {"image/Lettuce.PNG","image/Hat.PNG","image/Carrots.PNG","image/Rabbit.PNG","image/OtherRabbit.PNG","image/table.PNG","image/table.PNG","image/table.PNG"};
+    private String[] IMAGE = {"image/Lettuce.PNG","image/Hat.PNG","image/Carrots.PNG","image/Rabbit.PNG","image/OtherRabbit.PNG","image/PropVerso.PNG","image/PropVerso.PNG","image/PropVerso.PNG"};
     private String simage;
     
 	/* (non-Javadoc)

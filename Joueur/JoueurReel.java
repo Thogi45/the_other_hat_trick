@@ -9,7 +9,7 @@ import Modele.Jeu;
 
 public class JoueurReel extends Joueur {
     private double age;
-    
+    private Jeu JeuActuel;
 
     
 	public void setCarteMain(Prop carteMain) {
@@ -134,10 +134,13 @@ public class JoueurReel extends Joueur {
 		
 		System.out.println(this.getTrickARealiser().get(0).toString());
 		System.out.println("Voulez-vous réaliser ce tour ? (Oui ou Non)");	
-		Scanner sc = new Scanner(System.in);
-		String reponse = sc.nextLine();
-		char rep = reponse.charAt(0);
-		if (rep=='N'||rep=='n') {
+		//Scanner sc = new Scanner(System.in);
+		//String reponse = sc.nextLine(); 
+		System.out.println("1");
+		this.getJeuActuel().FlipTrick();
+		System.out.println("2");
+		//char rep = reponse.charAt(0);
+		if (this.JeuActuel.getBChoixTrick()) {
 			System.out.println("=====================");
 			System.out.println("Le nouveau tour est donc :");
 			System.out.println(this.getTrickARealiser().get(1).toString());
@@ -145,7 +148,7 @@ public class JoueurReel extends Joueur {
 			trickChoix = true;
 			OK = true;
 		}
-		else if (rep=='o'||rep=='O') {
+		else  {
 			System.out.println("=====================");
 			System.out.println("Le tour à réaliser est donc ");
 			System.out.println(this.getTrickARealiser().get(0).toString());
@@ -153,13 +156,18 @@ public class JoueurReel extends Joueur {
 			trickChoix = false;
 			OK = true;
 		}
-		else {
+		/*else {
 			System.out.println("Vous avez mal répondu.");
 			OK = false;
-		}
+		}*/
 		}
 		System.out.println("=====================");
 		return trickChoix;
+		
+	}
+
+	private void FlipTrick() {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -211,8 +219,13 @@ public class JoueurReel extends Joueur {
 		
 		
 	
+	public void setJeuActuel(Jeu j) {
+		this.JeuActuel = j;
+	}
 	
-
+	public Jeu getJeuActuel () {
+		return this.JeuActuel;
+	}
 
 	public void setJeu(Jeu jeu) {
 		return;

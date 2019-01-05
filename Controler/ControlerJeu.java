@@ -35,19 +35,23 @@ public class ControlerJeu {
 							Double ageJR = infoJR.getageJR();
 							String niveau = infoJR.getNiveau();*/
 				System.out.println(infoJR.getnbrJ());	
-				Jeu jeu = Jeu.creerNouveauJeu( infoJR.getnbrJ(), infoJR.getnbrJR(),infoJR.getnbrJV(),infoJR.getnomJR(),infoJR.getageJR(),infoJR.getNiveau());
-				jeu.start();
-				try {
+				Jeu jeu = new Jeu( infoJR.getnbrJ(), infoJR.getnbrJR(),infoJR.getnbrJV(),infoJR.getnomJR(),infoJR.getageJR(),infoJR.getNiveau());
+				//jeu.start();
+				/*try {
 					Thread.sleep(100);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
 				
 				Controler controlerJeu = new Controler(jeu);
 				MainGraphique mainGraphique = new MainGraphique(controlerJeu);
+	
 				jeu.addObserver(mainGraphique);
+	
 				infoJR.dispose();
+				
+				jeu.start();
 				
 				};
 				

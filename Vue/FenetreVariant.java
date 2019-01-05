@@ -87,7 +87,7 @@ public class FenetreVariant extends JFrame {
 		inbrJR.getModel().setMinimum(0);
 		inbrJR.getModel().setMaximum(5);
 		inbrJR.getModel().setStepSize(1);
-		inbrJR.getModel().setValue(0); 
+		inbrJR.getModel().setValue(1); 
 		inbrJR.getTextField().setEditable(true);
 		
 		JLabel label = new JLabel("Combien de Joueurs?");
@@ -102,7 +102,7 @@ public class FenetreVariant extends JFrame {
 		inbrJ.getModel().setMinimum(0);
 		inbrJ.getModel().setMaximum(5);
 		inbrJ.getModel().setStepSize(1);
-		inbrJ.getModel().setValue(0); 
+		inbrJ.getModel().setValue(3); 
 		inbrJ.getTextField().setEditable(true);
 		
 		frame.getContentPane().add(this.nbrJoueur);

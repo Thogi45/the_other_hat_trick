@@ -23,8 +23,10 @@ private Trick carte;
 private String pathFaceUp;
 private String pathFaceDown; 
 private Image background; 
-private Image FaceUp; 
-private Image FaceDown; 
+private Image backgroundUp; 
+private Image backgroundDown;
+private boolean bIsFaceUp; 
+private BufferedImage img; 
 
 public PanelTrick (Trick t,Controler ctrl) {
 this.controler =ctrl;
@@ -33,29 +35,31 @@ this.carte = t;
 pathFaceUp = this.carte.getsimage(t.getValeur());
 pathFaceDown = "image/TrickVerso.PNG";
 
-BufferedImage img = null;
+BufferedImage imgUp = null;
 try {
-img = ImageIO.read(new File(pathFaceUp));
+imgUp = ImageIO.read(new File(this.pathFaceUp));
 
 } catch (IOException e) {
 e.printStackTrace();
 }
-Image FaceUp = img.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+//Image FaceUp = img.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+this.backgroundUp =  imgUp.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
 
 BufferedImage imgDown = null;
-try {
-imgDown = ImageIO.read(new File(pathFaceDown));
+try
+{
+imgDown = ImageIO.read(new File(this.pathFaceDown));
 
 } catch (IOException e) {
 e.printStackTrace();
 }
-Image FaceDown = imgDown.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+this.backgroundDown = imgDown.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
 
 Dimension cardDimension = new Dimension(136, 80);
 this.setMinimumSize(cardDimension);
 this.setMaximumSize(cardDimension);
 this.setPreferredSize(cardDimension);
-this.background = FaceUp; 
+this.background = backgroundUp; 
 this.addMouseListener(new MouseListener() {
 
 @Override
@@ -95,7 +99,7 @@ g.drawImage(this.background, 0, 0,getWidth(),getHeight(), null);
 }
 
 public void faceDown() {
-this.background = this.FaceDown;
+this.background = this.backgroundDown;
 this.repaint();
 }
 

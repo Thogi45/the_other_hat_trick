@@ -1,10 +1,18 @@
 package Modele;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.Observable;
-import java.util.Scanner;
+import java.util.Observer;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 import Carte.Prop;
 import Carte.Trick;
@@ -17,6 +25,8 @@ import Joueur.Moyen;
 import Vue.MainGraphique;
 import javafx.scene.chart.Chart;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 
@@ -55,16 +65,18 @@ public class Jeu  extends Observable implements Runnable {
     
     private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
     
-     
+    private boolean BChoixTrick; 
+    private int JoueurChoisi; 
     public Jeu getJeu() {
     	return this;
     }
    
     public Jeu (int nbrJ, int nbrJR, int nbrJV, String nom, Double age, String niveau) {
-    	super();
+    	//super(); 
+    	
     	JoueurReel joueurR = new JoueurReel(age,nom);
     	this.joueurR.add(joueurR);
-    	
+    	this.joueurR.get(0).setJeuActuel(this);
     	for (int i =0; i < 2 ; i++ ) {
     		if (niveau == "f") {
     			this.joueurV.add(new JoueurVirtuel(new Facile()));
@@ -87,16 +99,13 @@ public class Jeu  extends Observable implements Runnable {
     	this.joueur.add(joueurV.get(1));
     	
     	this.joueur.get(0).setEstPremierAJouer(true);
-    	this.creerCartesdeBase(); 	
+    	this.creerCartesdeBase();
+  
     	
     	//this.start();
     	
     }
     
-    public static Jeu creerNouveauJeu(int nbrJ, int nbrJR, int nbrJV, String nom, Double age, String niveau) {
-    	Jeu jeu = new Jeu( nbrJ,  nbrJR,  nbrJV,  nom,  age,  niveau);
-    	return jeu;
-    }
     
     public void distribuerProps () {
     	int nbreProps = this.prop.size();
@@ -670,16 +679,39 @@ public class Jeu  extends Observable implements Runnable {
 	}
 
 	public void run() {
+		this.joueur.get(0).setEstPremierAJouer(true);
+		this.commencer();
 		
-		this.gererActionsDeJeu(0);
 		
-		
+	
 	}
 
-	public void addObserver(MainGraphique mainGraphique) {
+	public void FlipTrick() {
 		// TODO Auto-generated method stub
 		
+		this.setChanged();
+		this.notifyObservers("FlipTrick");
+			}
+	public boolean getBChoixTrick() { 
+		return this.BChoixTrick; 
 	}
 	
-
+	public void setBChoixtrick(boolean b) {
+		this.BChoixTrick = b;
+	}
+	public void ChoixJoueur() {
+		this.setChanged();
+		this.notifyObservers("ChoixJoueur");
+	}
+	public int getJoueurChoisi() {
+		return this.JoueurChoisi; 
+	}
+	public void setJoueurChoisi(int i) { 
+		this.JoueurChoisi = i;
+	}
+	@Override
+	public synchronized void setChanged() {
+		// TODO Auto-generated method stub
+		super.setChanged();
+	}
 }

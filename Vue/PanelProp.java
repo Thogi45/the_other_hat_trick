@@ -34,7 +34,7 @@ pathFaceDown = "image/CarteVerso.PNG";
 
 BufferedImage imgUp = null;
 try {
-imgUp = ImageIO.read(new File(pathFaceUp));
+imgUp = ImageIO.read(new File(this.pathFaceUp));
 
 } catch (IOException e) {
 e.printStackTrace();
@@ -44,7 +44,7 @@ this.backgroundUp = imgUp.getScaledInstance(120, 200, Image.SCALE_SMOOTH);
 
 BufferedImage imgDown = null;
 try {
-imgDown = ImageIO.read(new File(pathFaceDown));
+imgDown = ImageIO.read(new File(this.pathFaceDown));
 
 } catch (IOException e) {
 e.printStackTrace();

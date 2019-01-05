@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import Controler.Controler;
@@ -107,6 +108,19 @@ public class MainGraphique implements Observer {
 		@Override
 		public void update(Observable o, Object arg) {
 			// TODO Auto-generated method stub
+			String message = (String) arg; 
+			if (message == "FlipTrick") {
+				int reponse = JOptionPane.showConfirmDialog(this.frame,"Voulez-vous réaliser ce tour ? (Oui ou Non)","Choisir Trick", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				System.out.println(reponse);
+				if (reponse == JOptionPane.YES_OPTION) {
+					this.jeu.setBChoixtrick(true);
+				}
+				if (reponse == JOptionPane.NO_OPTION) {
+					this.jeu.setBChoixtrick(false);
+					
+				}
+				
+			}
 			
 		}
 		

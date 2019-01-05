@@ -1,6 +1,9 @@
 package Vue;
 
+import java.awt.Dimension;
+
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controler.Controler;
@@ -15,23 +18,27 @@ public class TableTrick extends JPanel {
 		this.jeu = jeu;
 		this.controler = controler;
 		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.displayComponent();
 	}
 		private void displayComponent() {
-		JPanel tableTrick = new JPanel();
-		tableTrick.setLayout(new BoxLayout(tableTrick, BoxLayout.X_AXIS));
+		//JPanel tableTrick = new JPanel(new BoxLayout(this, BoxLayout.X_AXIS));
+		//tableTrick.setLayout(new BoxLayout(tableTrick, BoxLayout.X_AXIS));
 		
-		PanelTrick TrickP = new PanelTrick(this.jeu.mettreAJourLaPile().get(0), this.controler);
+			PanelTrick TrickP = new PanelTrick(this.jeu.mettreAJourLaPile().get(0), this.controler);
+			
+
+			PanelTrick TrickD = new PanelTrick(this.jeu.mettreAJourLaPile().get(1), this.controler);
+			TrickD.faceDown();
+			
+		this.add(TrickP);
+		//TrickP.setPreferredSize(new Dimension(60, 40));
+		this.add(new JLabel(" Trick Pile " ));
+		this.add(TrickD);	
+		//TrickP.setPreferredSize(new Dimension(100, 40));
+		this.add(new JLabel(" Trick Deck " ));
 		
-		
-		PanelTrick TrickD = new PanelTrick(this.jeu.mettreAJourLaPile().get(1), this.controler);
-		TrickD.faceDown();
-		
-		tableTrick.add(TrickP);
-		tableTrick.add(TrickD);		
-		
-		this.add(tableTrick);
+		//this.add(tableTrick);
 	
 		}
 }
