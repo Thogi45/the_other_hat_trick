@@ -16,8 +16,8 @@ public class Prop extends Carte {
 	private int valeur;
 	private boolean isFaceUp =false;
     private String nomP;
-    
-    
+    private String[] IMAGE = {"image/Lettuce.PNG","image/Hat.PNG","image/Carrots.PNG","image/Rabbit.PNG","image/OtherRabbit.PNG","image/table.PNG","image/table.PNG","image/table.PNG"};
+    private String simage;
     
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -55,7 +55,7 @@ public class Prop extends Carte {
 		super();
 		this.valeur = valeur;
 		this.nomP = VALEURS[valeur];
-		
+		this.simage = IMAGE[valeur]; 
 	}
 	public void ajouterCartes(int cartesAjoutees, int valeur) {
 		int propsAjoutees = cartesAjoutees;
@@ -128,5 +128,8 @@ public class Prop extends Carte {
 
     public void choisir2propspourswitch() {
     }
+	public String getsimage(int i) {
+		return this.IMAGE[i];
+	}
 
 }

@@ -2,6 +2,7 @@ package Vue;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -28,8 +29,10 @@ public class MainGraphique implements Observer {
 		private JPanel panelCenter;
 		private JPanel panelSouth;
 		private PanelJoueurVirtuel panelLeft;
+		
 
 		public MainGraphique(Controler ctrl) {
+			//System.out.println("show graphique");
 			this.controler = ctrl;
 			this.jeu = this.controler.getJeu();
 			/*match.start();
@@ -81,10 +84,10 @@ public class MainGraphique implements Observer {
 			
 			
 			panelSouth = new PanelJoueurReel(this.jeu,this.controler,this.jeu.getJoueurR().get(0));
-			TitledBorder borderBottom = new TitledBorder("Center Game");
+			TitledBorder borderBottom = new TitledBorder("JoueurReel");
 			borderBottom.setTitleJustification(TitledBorder.CENTER);
 			borderBottom.setTitlePosition(TitledBorder.TOP);
-			panelSouth.setBorder(borderTop);
+			panelSouth.setBorder(borderBottom);
 			panelSouth.setPreferredSize(new Dimension(1220, 180));
 			frame.add(panelSouth,BorderLayout.PAGE_END);
 			
@@ -97,7 +100,7 @@ public class MainGraphique implements Observer {
 			panelCenter.setPreferredSize(new Dimension(300, 200));
 			frame.add(panelCenter,BorderLayout.CENTER);
 			
-			this.frame.setVisible(true);
+			frame.setVisible(true);
 			
 		}
 

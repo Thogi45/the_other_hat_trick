@@ -37,7 +37,25 @@ public class PanelJoueurReel extends JPanel implements Observer {
 	}
 
 	private void displayComponent() {
-				
+		JPanel infoJoueur = new JPanel();
+		infoJoueur.setLayout(new BoxLayout(infoJoueur, BoxLayout.X_AXIS));
+		JLabel nameBox = new JLabel("Name: " + this.joueurR.getNom());
+		nameBox.setSize(100, 25);
+		infoJoueur.add(nameBox);
+		
+		JLabel pointBox = new JLabel("Point: " + this.joueurR.getPoint());
+		pointBox.setSize(100, 25);
+		infoJoueur.add(pointBox);
+		this.add(infoJoueur);
+		
+		JPanel listProp = new JPanel();
+		infoJoueur.setLayout(new BoxLayout(infoJoueur, BoxLayout.X_AXIS));
+		for (int i=0;i<2;i++) {
+			PanelProp carteProp = new PanelProp(this.joueurR.getMain().get(i), this.controler);
+			listProp.add(carteProp);
+			carteProp.faceUp();		
+		}
+		this.add(listProp);		
 	}
 
 	@Override

@@ -1,4 +1,4 @@
- package Modele;
+package Modele;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import Joueur.JoueurReel;
 import Joueur.JoueurVirtuel;
 import Joueur.Moyen;
 import Vue.MainGraphique;
+import javafx.scene.chart.Chart;
 
 import java.util.Iterator;
 
@@ -58,6 +59,44 @@ public class Jeu  extends Observable implements Runnable {
     public Jeu getJeu() {
     	return this;
     }
+   
+    public Jeu (int nbrJ, int nbrJR, int nbrJV, String nom, Double age, String niveau) {
+    	super();
+    	JoueurReel joueurR = new JoueurReel(age,nom);
+    	this.joueurR.add(joueurR);
+    	
+    	for (int i =0; i < 2 ; i++ ) {
+    		if (niveau == "f") {
+    			this.joueurV.add(new JoueurVirtuel(new Facile()));
+    		}
+    		else if (niveau =="m") {
+    			this.joueurV.add(new JoueurVirtuel(new Moyen()));
+    		}
+    		else if (niveau == "d") {
+    			this.joueurV.add(new JoueurVirtuel(new Difficile()));
+    		}
+    		this.joueurV.get(i).setNom("ordi "+ (i+1));
+    		this.joueurV.get(i).setEstPremierAJouer(false);
+    	}	
+    	this.setNbredeJoueurs(nbrJ);
+    	this.nbredeJoueursR = nbrJR;
+    	this.nbredeJoueursV = nbrJV;
+    	
+    	this.joueur.add(joueurR);
+    	this.joueur.add(joueurV.get(0));
+    	this.joueur.add(joueurV.get(1));
+    	
+    	this.joueur.get(0).setEstPremierAJouer(true);
+    	this.creerCartesdeBase(); 	
+    	
+    	//this.start();
+    	
+    }
+    
+    public static Jeu creerNouveauJeu(int nbrJ, int nbrJR, int nbrJV, String nom, Double age, String niveau) {
+    	Jeu jeu = new Jeu( nbrJ,  nbrJR,  nbrJV,  nom,  age,  niveau);
+    	return jeu;
+    }
     
     public void distribuerProps () {
     	int nbreProps = this.prop.size();
@@ -72,7 +111,7 @@ public class Jeu  extends Observable implements Runnable {
     			j=0;
     		}
     	}
-    	this.commencer();
+    	//this.commencer();
     }
 
 	public int getNbredeJoueurs() {
@@ -123,10 +162,7 @@ public class Jeu  extends Observable implements Runnable {
 		this.joueurR = joueurR;
 	}
 
-	public Jeu() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	public int getNbredeJoueursV() {
 		return nbredeJoueursV;
@@ -221,12 +257,12 @@ public class Jeu  extends Observable implements Runnable {
 		this.creerJoueurs();
 	}
 
-	public Jeu(int nbredecartes, int nbredeJoueursR, int nbredeJoueursV) {
+	/*public Jeu(int nbredecartes, int nbredeJoueursR, int nbredeJoueursV) {
 		super();
 		this.nbredeJoueursV = nbredeJoueursV;
 		this.nbredeJoueursR = nbredeJoueursR;
 		this.nbredecartes = nbredecartes;
-	}
+	}*/
 	
 	
 	
@@ -627,10 +663,16 @@ public class Jeu  extends Observable implements Runnable {
 		return trickAFaire;
 		
 	}
+	
+	public void start() {
+		Thread myThreat = new Thread(this);
+		myThreat.start();
+	}
 
-	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
+		this.gererActionsDeJeu(0);
+		
 		
 	}
 

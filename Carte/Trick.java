@@ -26,7 +26,8 @@ public class Trick extends Carte {
 
     private boolean trickreussi;
     private boolean faceUp;
-    
+    private String [] IMAGE = {"image.PairRabbits.PNG","image/HatTrick.PNG","image/HungryRabbit.PNG","image/RabbitNotCarrots.PNG","image/CarrotsHat.PNG","image/SlightEasy.PNG","image/table.PNG","image/table.PNG","image/Vegetable.PNG","image/OtherHat.PNG","image/table.PNG","image/table.PNG"};
+    private String simage;
 	public static void ajoutervaleurs(int cartesAjoutees) {
 		for (int i = 9; i < (4+cartesAjoutees); i++ ) {
 			System.out.println("Donner le nom du Trick : ");
@@ -94,6 +95,7 @@ public class Trick extends Carte {
 		if (this.valeur <= 11) {
 			this.creerTrickdeBase();
 		}
+		this.simage = IMAGE[valeur]; 
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -235,6 +237,12 @@ public class Trick extends Carte {
 		this.trickreussi = trickreussi;
 	}
 	//test
+
+
+	public String getsimage(int i) {
+		
+		return IMAGE[i] ;
+	}
 	
 
     

@@ -79,11 +79,11 @@ public class FenetreVariant extends JFrame {
 		nbrJoueurR.setBounds(146, 140, 163, 16);
 		frame.getContentPane().add(nbrJoueurR);
 		
-		final JSpinner nbrJoueurReel = new JSpinner();
-		inbrJR = new JSpinner.NumberEditor(nbrJoueurReel);
-		nbrJoueurReel.setBounds(218, 169, 30, 22);
-		nbrJoueurReel.setEditor(inbrJR);
-		frame.getContentPane().add(nbrJoueurReel);
+		this.nbrJoueurReel = new JSpinner();
+		inbrJR = new JSpinner.NumberEditor(this.nbrJoueurReel);
+		this.nbrJoueurReel.setBounds(218, 169, 30, 22);
+		this.nbrJoueurReel.setEditor(inbrJR);
+		frame.getContentPane().add(this.nbrJoueurReel);
 		inbrJR.getModel().setMinimum(0);
 		inbrJR.getModel().setMaximum(5);
 		inbrJR.getModel().setStepSize(1);
@@ -94,53 +94,49 @@ public class FenetreVariant extends JFrame {
 		label.setBounds(146, 219, 163, 16);
 		frame.getContentPane().add(label);
 		
-		final JSpinner nbrJoueur = new JSpinner();
-		inbrJ = new JSpinner.NumberEditor(nbrJoueur);
-		nbrJoueur.setBounds(218, 248, 30, 22);
-		nbrJoueur.setEditor(inbrJ);
-		frame.getContentPane().add(nbrJoueur);
+		this.nbrJoueur = new JSpinner();
+		inbrJ = new JSpinner.NumberEditor(this.nbrJoueur);
+		this.nbrJoueur.setBounds(218, 248, 30, 22);
+		this.nbrJoueur.setEditor(inbrJ);
+		frame.getContentPane().add(this.nbrJoueur);
 		inbrJ.getModel().setMinimum(0);
 		inbrJ.getModel().setMaximum(5);
 		inbrJ.getModel().setStepSize(1);
 		inbrJ.getModel().setValue(0); 
 		inbrJ.getTextField().setEditable(true);
 		
-		frame.getContentPane().add(nbrJoueur);
+		frame.getContentPane().add(this.nbrJoueur);
 		this.frame.setVisible(true);
 		
 		
 		this.btOK = new JButton("OK");
-		btOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// get valeur entree
-				valeur=regle.getText();
-				
-				nbrJR= (Integer) nbrJoueurReel.getValue(); 
-					
-				nbrJ=(Integer) nbrJoueur.getValue();
-				
-				nbrJV = nbrJ - nbrJR;
 		
-				final InfoJoueurReel frame1 = new InfoJoueurReel();
-				frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-				frame1.setnbrJR(nbrJR);
-				frame1.setnbrJV(nbrJV);
-				frame1.setnbrJ(nbrJ);
-				
-				frame1.setVisible(true);
-				
-				
-				frame.setVisible(false);
-			
-					
-				}
-		});
-		btOK.setBounds(178, 293, 97, 25);
+		
+		this.btOK.setBounds(178, 293, 97, 25);
 		frame.getContentPane().add(btOK);		
 		
 		
 		
+	}
+	
+	protected void setNbJ(Integer nbrJ2) {
+		this.nbrJ = nbrJ2;
+	}
+
+
+	public Integer getnbrJ() {
+		return (Integer) this.nbrJoueur.getValue();
+	}
+	public Integer getnbrJR() {
+		return(Integer) this.nbrJoueurReel.getValue();
+	}
+	public Integer getnbrJV() {
+		return nbrJV;
+	}
+	
+	
+	public void closeWindow() {
+		this.frame.dispose();
 	}
 	
 	
