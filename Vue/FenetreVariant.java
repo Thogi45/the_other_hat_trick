@@ -22,7 +22,7 @@ import Modele.Jeu;
 
 import java.awt.Font;
 import Vue.InfoJoueurReel;
-public class FenetreVariant {
+public class FenetreVariant extends JFrame {
 
 	private JFrame frame;
 	private String valeur;
@@ -34,6 +34,9 @@ public class FenetreVariant {
 	private NumberEditor inbrJR;
 	private NumberEditor inbrJ;
 	protected Integer nbrJV;
+	private Jeu jeu;
+	
+	public JButton btOK;
 	
 	
 	public static void main(String[] args) {
@@ -48,13 +51,11 @@ public class FenetreVariant {
 			}
 		});
 	}
-	public FenetreVariant() { 
-		this.initialize();
-	} 
+	
 
 	//Initialize the contents of the frame.
 
-	private void initialize() {
+	public FenetreVariant() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,13 +106,12 @@ public class FenetreVariant {
 		inbrJ.getTextField().setEditable(true);
 		
 		frame.getContentPane().add(nbrJoueur);
+		this.frame.setVisible(true);
 		
 		
-		
-		JButton ok = new JButton("OK");
-		ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0
-					) {
+		this.btOK = new JButton("OK");
+		btOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				// get valeur entree
 				valeur=regle.getText();
 				
@@ -120,24 +120,28 @@ public class FenetreVariant {
 				nbrJ=(Integer) nbrJoueur.getValue();
 				
 				nbrJV = nbrJ - nbrJR;
+		
+				final InfoJoueurReel frame1 = new InfoJoueurReel();
+				frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
+				frame1.setnbrJR(nbrJR);
+				frame1.setnbrJV(nbrJV);
+				frame1.setnbrJ(nbrJ);
+				
+				frame1.setVisible(true);
 				
 				
 				frame.setVisible(false);
-				
-				final InfoJoueurReel InfoJoueurReel = new InfoJoueurReel();
-				InfoJoueurReel.setnbrJR(nbrJR);
-				InfoJoueurReel.setnbrJV(nbrJV);
-				InfoJoueurReel.setnbrJ(nbrJ);
-				//InfoJoueurReel.setVisible(true);
-				
 			
 					
 				}
 		});
-		ok.setBounds(178, 293, 97, 25);
-		frame.getContentPane().add(ok);		
+		btOK.setBounds(178, 293, 97, 25);
+		frame.getContentPane().add(btOK);		
+		
 		
 		
 	}
+	
+	
 }

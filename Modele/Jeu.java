@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 import java.util.Scanner;
 
 import Carte.Prop;
@@ -13,6 +14,7 @@ import Joueur.Joueur;
 import Joueur.JoueurReel;
 import Joueur.JoueurVirtuel;
 import Joueur.Moyen;
+import Vue.MainGraphique;
 
 import java.util.Iterator;
 
@@ -20,7 +22,7 @@ import java.util.Iterator;
 
 //import sun.jvm.hotspot.debugger.proc.ppc64.ProcPPC64Thread;
 
-public class Jeu {
+public class Jeu  extends Observable implements Runnable {
     private String etat;
 
     private String joueurEnCours;
@@ -52,6 +54,7 @@ public class Jeu {
     
     private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
     
+     
     public Jeu getJeu() {
     	return this;
     }
@@ -224,6 +227,8 @@ public class Jeu {
 		this.nbredeJoueursR = nbredeJoueursR;
 		this.nbredecartes = nbredecartes;
 	}
+	
+	
 	
     public void creerJoueurs() {
     	int joueursR = this.nbredeJoueursR;
@@ -620,6 +625,17 @@ public class Jeu {
 		trickAFaire.add(this.trickP.get(this.trickP.size()-1));
 		trickAFaire.add(this.trickD.get(0));
 		return trickAFaire;
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addObserver(MainGraphique mainGraphique) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -1,9 +1,11 @@
 package Vue;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -14,17 +16,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.NumberEditor;
+
 import javax.swing.JTextField;
 
+import Controler.Controler;
 import Joueur.Difficile;
 import Joueur.Facile;
 import Joueur.JoueurReel;
 import Joueur.JoueurVirtuel;
 import Joueur.Moyen;
 import Modele.Jeu;
+import Modele.DemarrageJeu;
 
 public class InfoJoueurReel extends JFrame {
-		private JFrame pricipalFrame;
+		private JFrame principalFrame;
 		private JPanel container;
 		private JSpinner spAgeJoueur;
 		private NumberEditor iAgeJoueur;
@@ -41,13 +46,28 @@ public class InfoJoueurReel extends JFrame {
 		private Integer nbrJR;
 		private Integer nbrJV;
 		private Integer nbrJ;
+		private Jeu jeu;
 		private int index;
-	
+		private DemarrageJeu DemarrageJeu;
+		private JoueurReel joueurR;
 
-		public InfoJoueurReel() {
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						InfoJoueurReel frame1= new InfoJoueurReel();
+						frame1.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		
+		public void InfoJoueurReel() {
 			index = 1;
-			pricipalFrame = new JFrame("Parametrage");
-			container = new JPanel(new GridLayout(2, 4, 5, 5));
+			principalFrame = new JFrame("Parametrage");
+			container = new JPanel(new GridLayout(2, 40, 500, 500));
 			
 			
 			
@@ -89,93 +109,128 @@ public class InfoJoueurReel extends JFrame {
 				container.add(nomField);
 				container.add(new JLabel("Veuillez entrer ton age"));
 				container.add(spAgeJoueur);
+<<<<<<< HEAD
 				container.add(new JLabel("Veuillez choisir ton niveau"));
 				 container.add(tempPanel);
+=======
+				container.add(new JLabel("Veuillez choisir ton vineau"));
+				container.add(tempPanel);
+>>>>>>> cdd44802b5a231e1eadc7fdf72f7860d16239cf7
 				
 				container.add(new JLabel());
-				// creer nouveau jeu
 				
-				final Jeu jeu = new Jeu();
-				/*jeu.setNbredeJoueurs(nbrJ);
-				jeu.setNbredeJoueursR(nbrJR);
-				jeu.setNbredeJoueursV(nbrJV);*/
+				this.frame1=principalFrame;
+				principalFrame.setContentPane(container);
+				principalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				principalFrame.pack();
+				this.frame1.setVisible(true);
+				
 				final JButton Ensuite = new JButton("Ensuite");
 				Ensuite.setFont(new Font("Arial", Font.PLAIN, 14));
 				Ensuite.setBounds(84, 211, 99, 27);
 				Ensuite.addActionListener(new ActionListener() {
-					//private Integer nbrJ;
-
 					public void actionPerformed(ActionEvent arg0) {
+						
 						nomJR = nomField.getText();
 						ageJR = (int) spAgeJoueur.getValue();
-						if (facile.isSelected()) {
-							niveau = "f";
-						} else if (moyen.isSelected()) {
-							niveau ="m";
-						}
-						else {
-							niveau = "d";				
-						}				
+						
 						System.out.println(nomJR);
 						System.out.println(ageJR);
 						System.out.println(niveau);
 						
 						JoueurReel joueurR = new JoueurReel(ageJR,nomJR);
-						jeu.getJoueurR().add(joueurR);
-						
-						if (index < nbrJR - 2) {
+							
+					/*	if (index < nbrJR - 2) {
 							index = index + 1;
 							Lbnom.setText("Veuillez entrer le nom de joueur "+ index );
 							nomField.setText("");
-							spAgeJoueur.setValue(5);
-							
-							
+							spAgeJoueur.setValue(5);				
 						}
+						
 						else if (index == nbrJR - 2){
-							try {
+							
+							try {*/
+						
 								if (facile.isSelected()) {
-									for (int i = 1; i <= nbrJV; i++ ) {
-									jeu.getJoueurV().add(new JoueurVirtuel(new Facile()));
-									}
+									niveau = "f";
 								} else if (moyen.isSelected()) {
-									for (int i = 1; i <= nbrJV; i++ ) {
-									jeu.getJoueurV().add(new JoueurVirtuel(new Moyen()));
-									}
+									niveau = "m";
 								}
 								else {
-									for (int i = 1; i <= nbrJV; i++ ) {
-									jeu.getJoueurV().add(new JoueurVirtuel(new Difficile()));
-								}
-								}
-							}
-							
+									niveau = "d";
+								}				
+							/*}		
 							catch (Exception e) {
 								e.printStackTrace();
 							}
-						frame1.setVisible(false);
-						MainGraphique frame = new MainGraphique();
+							
 						}
+						*/
+						
+						creerJeu();
+						
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						frame1.setVisible(false);
+						Controler ctrl = new Controler(jeu);
+						MainGraphique fenetre = new MainGraphique(ctrl);
 						
 					}
 					
 					
 				});
+				
 				container.add(Ensuite);
 
-				pricipalFrame.setContentPane(container);
-				pricipalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				pricipalFrame.pack();
+				
 				// frame.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-				this.frame1=pricipalFrame;
-				this.frame1.setVisible(true);
+				
 				
 				
 			}
 
-			public static void main(String[] args) {
-				InfoJoueurReel view = new InfoJoueurReel();
+			public void creerJeu() {	
+				
+				final Jeu jeu = new Jeu();
+				this.jeu.setNbredeJoueurs(this.nbrJ);
+				this.jeu.setNbredeJoueursR(this.nbrJR);
+				this.jeu.setNbredeJoueursV(this.nbrJV);
+				
+				this.jeu.getJoueurR().add(joueurR);						
+				if (niveau == "f") {
+					for (int i = 1; i < 2; i++ ) {
+					jeu.getJoueurV().add(new JoueurVirtuel(new Facile()));
+					}
+				} else if (niveau == "m") {
+					for (int i = 1; i < 2; i++ ) {
+					jeu.getJoueurV().add(new JoueurVirtuel(new Moyen()));
+					}
+				}
+				else {
+					for (int i = 1; i < 2; i++ ) {
+					jeu.getJoueurV().add(new JoueurVirtuel(new Difficile()));
+				}	
+				}
+				
+				for (int i = 0; i < 2; i++) {
+					this.jeu.getJoueur().add(jeu.getJoueurV().get(i));
+				}
+				
+					this.jeu.getJoueur().add(jeu.getJoueurR().get(0));
+				
+					this.setCtrl(this.jeu);
+
+				// Commencer le jeu
+				this.jeu.commencer();
 				
 			}
+			
+			
 			
 			public void setnomField(String nom) {
 				this.nomField.setText(nom); 
@@ -185,33 +240,35 @@ public class InfoJoueurReel extends JFrame {
 				this.spAgeJoueur.setValue(age);
 			}
 			
-			/*public JoueurReel  getJoueurReel() {
-				
-				JoueurReel joueurR = new JoueurReel(ageJR,nomJR);
-				JoueurVirtuel joueurV = new JoueurVirtuel();
-				
-				return joueurR;
-				
-				
-			}*/
-			/*public Integer getageJR() {
-				return ageJR;
-			}
-			
-			public String getnomJR( ) {
-				return nomJR;
-			}
-			*/
+		
 			public void setnbrJR(Integer nbrJR) {
 				this.nbrJR = nbrJR;
 			}
 			public void setnbrJ(Integer nbrJ) {
-				this.nbrJR = nbrJ;
+				this.nbrJ = nbrJ;
 			}
 			public void setnbrJV(Integer nbrJV) {
 				this.nbrJV = nbrJV;
 			}
-
+			public Integer getnbrJR() {
+				return this.nbrJR;
+			}
+			
+			public Integer getnbrJ() {
+				return this.nbrJ;
+			}
+			public Integer getnbrJV() {
+				return this.nbrJV;
+			}
+			public Jeu getJeu() {
+				return this.jeu;
+			}
+			
+	
+			public void setCtrl(Jeu jeu) {}
+			
+			
+			
 			public void closeWindow() {
 				this.frame1.dispose();
 			}
