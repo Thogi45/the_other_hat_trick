@@ -1,4 +1,4 @@
- package Vue;
+package Vue;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -32,13 +32,13 @@ import Modele.DemarrageJeu;
 public class InfoJoueurReel extends JFrame {
 		private JFrame principalFrame;
 		private JPanel container;
-		public JSpinner spAgeJoueur;
+		private JSpinner spAgeJoueur;
 		private NumberEditor iAgeJoueur;
 		private ButtonGroup buttonGroup;
-		public JRadioButton facile;
-		public JRadioButton moyen;
+		private JRadioButton facile;
+		private JRadioButton moyen;
 		private JRadioButton difficile;
-		public JTextField nomField;
+		private JTextField nomField;
 		public JButton Ensuite;
 		public JFrame frame;
 		private String niveau;
@@ -48,10 +48,11 @@ public class InfoJoueurReel extends JFrame {
 		private Integer nbrJV;
 		private Integer nbrJ;
 		private Jeu jeu;
-	
+		private int index;
 		private DemarrageJeu DemarrageJeu;
 		private JoueurReel joueurR;
 	
+
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
@@ -65,8 +66,7 @@ public class InfoJoueurReel extends JFrame {
 			});
 		}
 		
-		public  InfoJoueurReel() {
-		this.setTitle("The Other Hat Trick");
+		public  InfoJoueurReel() {this.setTitle("The Other Hat Trick");
 		this.setLocationRelativeTo(null);
 		this.setResizable(false); 
 		this.setBounds(100, 100, 450, 450);
@@ -75,9 +75,9 @@ public class InfoJoueurReel extends JFrame {
 		
 		
 		
-		this.spAgeJoueur = new JSpinner();
+		spAgeJoueur = new JSpinner();
 		iAgeJoueur = new JSpinner.NumberEditor(spAgeJoueur);
-		this.spAgeJoueur.setEditor(iAgeJoueur);
+		spAgeJoueur.setEditor(iAgeJoueur);
 			// Définition des limites du spinner
 		iAgeJoueur.getModel().setMinimum(5);
 		iAgeJoueur.getModel().setMaximum(80);
@@ -88,46 +88,75 @@ public class InfoJoueurReel extends JFrame {
 
 		
 			buttonGroup = new ButtonGroup();
-			this.facile = new JRadioButton("Facile");
-			this.moyen = new JRadioButton("Moyen");
+			facile = new JRadioButton("Facile");
+			moyen = new JRadioButton("Moyen");
 			difficile = new JRadioButton("Difficile");
 			JPanel tempPanel = new JPanel();
 			tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.Y_AXIS));
-			tempPanel.add(this.facile);
-			tempPanel.add(this.moyen);
+			tempPanel.add(facile);
+			tempPanel.add(moyen);
 			tempPanel.add(difficile);
 
 			// ajoute des boutons radio dans le groupe
-			buttonGroup.add(this.facile);
-			buttonGroup.add(this.moyen);
+			buttonGroup.add(facile);
+			buttonGroup.add(moyen);
 			buttonGroup.add(difficile);
-			buttonGroup.setSelected(this.facile.getModel(), true);
+			buttonGroup.setSelected(facile.getModel(), true);
 
-			this.nomField = new JTextField("");
+			nomField = new JTextField("");
 			
 			container = new JPanel(new GridLayout(5, 1, 5, 5));
 			
 			container.add(new JLabel("Veuillez entrer le nom de joueur " ));
-			container.add(this.nomField);
+			container.add(nomField);
 			container.add(new JLabel("Veuillez entrer ton age"));
-			container.add(this.spAgeJoueur);
+			container.add(spAgeJoueur);
 			container.add(new JLabel("Veuillez choisir ton vineau"));
 			container.add(tempPanel);
 			
 							
-			this.Ensuite = new JButton("Ensuite");
-			this.Ensuite.setFont(new Font("Arial", Font.PLAIN, 14));
-			this.Ensuite.setBounds(84, 211, 99, 27);
-		
+			Ensuite = new JButton("Ensuite");
+			Ensuite.setFont(new Font("Arial", Font.PLAIN, 14));
+			//this.Ensuite.setBounds(84, 211, 99, 27);
 			
-			this.Ensuite.setBounds(178, 293, 97, 25);
+			Ensuite.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+				
+					
+							if (facile.isSelected()) {
+								niveau = "f";
+							} else if (moyen.isSelected()) {
+								niveau = "m";
+							}
+							else {
+								niveau = "d";
+							}				
+						
+					
+					//creerJeu();		
+					//this.setVisible(false);
+					//Controller ctrl = new Controler(jeu);
+					//MainGraphique fenetre = new MainGraphique(ctrl);
+					
+				}
+				
+				
+			});
+			
+			Ensuite.setBounds(178, 293, 97, 25);
 			
 			container.add(Ensuite);
 			this.setContentPane(container);
 			this.pack();
 			this.setVisible(true);}
 
-			
+			/*public void creerJeu() {
+				
+				Jeu jeu = new Jeu(nbrJ, nbrJR, nbrJV,  nomJR, ageJR,niveau);
+				
+				
+			}*/
 			
 			
 			
@@ -154,7 +183,6 @@ public class InfoJoueurReel extends JFrame {
 			}
 			
 			public Integer getnbrJ() {
-				
 				return this.nbrJ;
 			}
 			public Integer getnbrJV() {
@@ -162,14 +190,27 @@ public class InfoJoueurReel extends JFrame {
 			}
 			
 			public String getnomJR() {
-				return this.nomJR;
+				return this.nomField.getText();
 			}
 			
 			public String getNiveau() {
+
+				if (this.facile.isSelected()) {
+					this.niveau = "f";
+				} else if (this.moyen.isSelected()) {
+					this.niveau = "m";
+				}
+				else {
+					this.niveau = "d";
+				}				
 				return this.niveau;
 			}
 			public Double getageJR() {
-				return this.ageJR;
+				Double dAge = 0.0; 
+				if (this.spAgeJoueur.getValue() instanceof Double) {
+					dAge = (Double) this.spAgeJoueur.getValue();
+				}
+				return dAge;
 			}
 			
 			public Jeu getJeu() {
@@ -186,8 +227,3 @@ public class InfoJoueurReel extends JFrame {
 			}
 			
 		}
-		
-		
-
-
-

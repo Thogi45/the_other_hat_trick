@@ -16,40 +16,27 @@ public class ControlerJeu {
 		
 		fnV.btOK.addActionListener(new ActionListener() {
 			
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
-				
 				final InfoJoueurReel infoJR = new InfoJoueurReel();
-				infoJR.setnbrJ(fnV.getnbrJ());
 				infoJR.setnbrJR(fnV.getnbrJR());
-
+				infoJR.setnbrJV(fnV.getnbrJ()-fnV.getnbrJR());
+				infoJR.setnbrJ(fnV.getnbrJ());
 				fnV.closeWindow();
 				
-				infoJR.Ensuite.addActionListener(new ActionListener() {
+					infoJR.Ensuite.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-					
-						String niveau ="";
-						
-								if (infoJR.facile.isSelected()) {
-									niveau = "f";
-								} else if (infoJR.moyen.isSelected()) {
-									niveau = "m";
-								}
-								else {
-									niveau = "d";
-								}				
-							
-						{
-							String nomJR =infoJR.nomField.getText();
-							int iNbJ = infoJR.getnbrJ();
+						   
+							/*int nbrJ = infoJR.getnbrJ();
 							int nbrJR = infoJR.getnbrJR();
-							int nbrJV = iNbJ-nbrJR;
-							int iAge = (int) infoJR.spAgeJoueur.getValue();
-							double ageJR =(double) iAge;
-							
-				Jeu jeu = Jeu.creerNouveauJeu( iNbJ, nbrJR, nbrJV, nomJR , ageJR , niveau);
-				
+							int nbrJV = infoJR.getnbrJV();
+							String nomJR = infoJR.getnomJR();
+							Double ageJR = infoJR.getageJR();
+							String niveau = infoJR.getNiveau();*/
+				System.out.println(infoJR.getnbrJ());	
+				Jeu jeu = Jeu.creerNouveauJeu( infoJR.getnbrJ(), infoJR.getnbrJR(),infoJR.getnbrJV(),infoJR.getnomJR(),infoJR.getageJR(),infoJR.getNiveau());
+				jeu.start();
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e1) {
@@ -59,21 +46,17 @@ public class ControlerJeu {
 				
 				Controler controlerJeu = new Controler(jeu);
 				MainGraphique mainGraphique = new MainGraphique(controlerJeu);
-				
 				jeu.addObserver(mainGraphique);
 				infoJR.dispose();
 				
-				jeu.start();
-				
 				};
-				}
+				
 			});
-			}		
-						
-			});
-		
 			
-	}
+						
+			}
+		
+		
+	});
 }
-
-	
+}
