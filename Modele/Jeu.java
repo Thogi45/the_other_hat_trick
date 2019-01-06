@@ -1,18 +1,10 @@
 package Modele;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
+import java.util.Scanner;
 
 import Carte.Prop;
 import Carte.Trick;
@@ -25,8 +17,6 @@ import Joueur.Moyen;
 import Vue.MainGraphique;
 import javafx.scene.chart.Chart;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 
@@ -66,7 +56,6 @@ public class Jeu  extends Observable implements Runnable {
     private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
     
     private boolean BChoixTrick; 
-    private int JoueurChoisi; 
     public Jeu getJeu() {
     	return this;
     }
@@ -699,19 +688,9 @@ public class Jeu  extends Observable implements Runnable {
 	public void setBChoixtrick(boolean b) {
 		this.BChoixTrick = b;
 	}
-	public void ChoixJoueur() {
-		this.setChanged();
-		this.notifyObservers("ChoixJoueur");
-	}
-	public int getJoueurChoisi() {
-		return this.JoueurChoisi; 
-	}
-	public void setJoueurChoisi(int i) { 
-		this.JoueurChoisi = i;
-	}
-	@Override
+	@Override 
 	public synchronized void setChanged() {
-		// TODO Auto-generated method stub
 		super.setChanged();
 	}
+
 }

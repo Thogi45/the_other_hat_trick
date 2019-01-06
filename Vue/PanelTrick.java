@@ -103,4 +103,25 @@ this.background = this.backgroundDown;
 this.repaint();
 }
 
+public void UpdateTrickP() {
+		this.removeAll();
+			try {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String path = this.controler.getJeu().mettreAJourLaPile().get(1).getsimage(this.controler.getJeu().mettreAJourLaPile().get(1).getValeur());
+			
+			this.background = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.validate();
+		this.repaint();
+}
+	
+
 }

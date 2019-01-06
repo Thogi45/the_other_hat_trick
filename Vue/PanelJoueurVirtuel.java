@@ -18,6 +18,7 @@ public class PanelJoueurVirtuel extends JPanel implements Observer  {
 	private Jeu jeu;
 	private Controler controler;
 	private JoueurVirtuel joueurV;
+	private PanelProp[] props=new PanelProp[2];
 
 	public PanelJoueurVirtuel(Jeu jeu, Controler controler, JoueurVirtuel joueurV) {
 		super();
@@ -43,8 +44,9 @@ public class PanelJoueurVirtuel extends JPanel implements Observer  {
 		JPanel listProp = new JPanel();
 		infoJoueur.setLayout(new BoxLayout(infoJoueur, BoxLayout.X_AXIS));
 		for (int i=0;i<2;i++) {
-			PanelProp carteProp = new PanelProp(this.joueurV.getMain().get(i), this.controler);
-			listProp.add(carteProp);
+			this.props[i] = new PanelProp(this.joueurV.getMain().get(i),this.joueurV.getMain().get(i).getIsFaceUp(), this.controler);
+			listProp.add(this.props[i]);
+			//carteProp.faceUp();		
 		}
 		this.add(listProp);
 		

@@ -24,7 +24,7 @@ public class MainGraphique implements Observer {
 		private JoueurReel JoueurReel;
 		private Controler controler;
 		private JFrame frame;
-		private JPanel panelNorth;
+		private TableTrick panelNorth;
 		private JPanel panelWest;
 		private JPanel panelEast;
 		private JPanel panelCenter;
@@ -114,12 +114,27 @@ public class MainGraphique implements Observer {
 				System.out.println(reponse);
 				if (reponse == JOptionPane.YES_OPTION) {
 					this.jeu.setBChoixtrick(true);
+					
 				}
 				if (reponse == JOptionPane.NO_OPTION) {
 					this.jeu.setBChoixtrick(false);
 					
 				}
 				
+				}
+			else if (message == "Change the TrickPile") {
+				System.out.println(this.controler.getJeu().mettreAJourLaPile().get(1).getNomtrick());
+				System.out.println("ready to repain");
+				this.panelNorth.getTrickP().UpdateTrickP();
+				
+				System.out.println("repained");
+				try {
+					Thread.sleep(200);
+					} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					}
+			}
 			}
 			
 		}
@@ -127,7 +142,7 @@ public class MainGraphique implements Observer {
 		
 
 
-	}
+	
 
 	
 

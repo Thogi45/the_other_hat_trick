@@ -26,12 +26,14 @@ public class PanelJoueurReel extends JPanel implements Observer {
 	private Jeu jeu;
 	private Controler controler;
 	private JoueurReel joueurR;
+	private PanelProp[] props=new PanelProp[2];
 
 	public PanelJoueurReel(Jeu jeu, Controler controler, JoueurReel joueurR) {
 		super();
 		this.jeu = jeu;
 		this.controler = controler;
 		this.joueurR= joueurR;
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.displayComponent();
 	}
@@ -51,10 +53,23 @@ public class PanelJoueurReel extends JPanel implements Observer {
 		JPanel listProp = new JPanel();
 		infoJoueur.setLayout(new BoxLayout(infoJoueur, BoxLayout.X_AXIS));
 		for (int i=0;i<2;i++) {
-			PanelProp carteProp = new PanelProp(this.joueurR.getMain().get(i), this.controler);
-			listProp.add(carteProp);
-			carteProp.faceUp();		
+			this.props[i] = new PanelProp(this.joueurR.getMain().get(i),this.joueurR.getMain().get(i).getIsFaceUp(), this.controler);
+			listProp.add(this.props[i]);
+			//carteProp.faceUp();		
 		}
+		
+		JPanel infoCartes = new JPanel();
+		infoCartes.setLayout(new BoxLayout(infoCartes, BoxLayout.X_AXIS));
+		JLabel prop1= new JLabel(this.joueurR.getMain().get(0).getNomP() +"     ");
+		prop1.setSize(100,25);
+		JLabel prop2= new JLabel("      " +this.joueurR.getMain().get(1).getNomP());
+		prop2.setSize(100,25);
+		infoCartes.add(prop1);
+		infoCartes.add(prop2);
+		
+		
+		
+		this.add(infoCartes);
 		this.add(listProp);		
 	}
 
@@ -62,5 +77,5 @@ public class PanelJoueurReel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
-	}
+}
 }

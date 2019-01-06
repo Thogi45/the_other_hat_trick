@@ -26,7 +26,7 @@ public class PanelPropCentre extends JPanel {
 		JPanel PropC = new JPanel();
 		PropC.setLayout(new BoxLayout(PropC, BoxLayout.X_AXIS));
 		
-			PanelProp PnPropC = new PanelProp(this.jeu.getProp().get(0), this.controler);
+			PanelProp PnPropC = new PanelProp(this.jeu.getProp().get(0), false, this.controler);
 			PropC.add(PnPropC);
 			//PnPropC.faceUp();		
 		

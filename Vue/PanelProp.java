@@ -24,10 +24,13 @@ private Image background;
 private Image backgroundUp;
 private Image backgroundDown;
 private String pathFaceDown;
+private String nomProp;
+private Boolean isFaceUp;
 
-public PanelProp (Prop p,Controler ctrl) {
+public PanelProp (Prop p, Boolean isFaceUp, Controler ctrl) {
 this.controler =ctrl;
 this.carte = p;
+this.isFaceUp = isFaceUp;
 
 pathFaceUp = this.carte.getsimage(p.getValeur());
 pathFaceDown = "image/CarteVerso.PNG";
@@ -57,6 +60,8 @@ this.setMaximumSize(cardDimension);
 this.setPreferredSize(cardDimension);
 
 this.background = this.backgroundDown;
+
+
 
 this.addMouseListener(new MouseListener() {
 
@@ -89,6 +94,9 @@ public void mouseClicked(MouseEvent e) {
 }
 });
 
+}
+public String getNomProp() {
+	return this.carte.getNomP();
 }
 @Override
 protected void paintComponent(Graphics g) {

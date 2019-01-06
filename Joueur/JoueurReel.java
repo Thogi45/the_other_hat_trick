@@ -136,10 +136,8 @@ public class JoueurReel extends Joueur {
 		System.out.println("Voulez-vous réaliser ce tour ? (Oui ou Non)");	
 		//Scanner sc = new Scanner(System.in);
 		//String reponse = sc.nextLine(); 
-		System.out.println("1");
-		this.getJeuActuel().FlipTrick();
-		System.out.println("2");
 		//char rep = reponse.charAt(0);
+		this.JeuActuel.FlipTrick();
 		if (this.JeuActuel.getBChoixTrick()) {
 			System.out.println("=====================");
 			System.out.println("Le nouveau tour est donc :");
@@ -156,20 +154,21 @@ public class JoueurReel extends Joueur {
 			trickChoix = false;
 			OK = true;
 		}
+		this.JeuActuel.setChanged();
+		this.JeuActuel.notifyObservers("Change the TrickPile");
 		/*else {
 			System.out.println("Vous avez mal répondu.");
 			OK = false;
 		}*/
 		}
+ 
 		System.out.println("=====================");
+		//this.getJeuActuel().setChanged(); 
+		//this.getJeuActuel().notifyObservers("Changer Trick A Faire");
 		return trickChoix;
-		
 	}
 
-	private void FlipTrick() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	public Object[] jouer() {
 		Object[] valeurs;
