@@ -135,6 +135,11 @@ public class MainGraphique implements Observer {
 					e.printStackTrace();
 					}
 			}
+			else if (message == "ChooseProp") {
+				JOptionPane jOp = new JOptionPane();
+				jOp.showConfirmDialog(this.frame," Quel prop voulez-vous échanger ?", "Changer Props", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
 			}
 			
 		}
