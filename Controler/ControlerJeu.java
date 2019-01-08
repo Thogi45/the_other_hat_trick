@@ -35,7 +35,7 @@ public class ControlerJeu {
 							Double ageJR = infoJR.getageJR();
 							String niveau = infoJR.getNiveau();*/
 				System.out.println(infoJR.getnbrJ());	
-				Jeu jeu = new Jeu( infoJR.getnbrJ(), infoJR.getnbrJR(),infoJR.getnbrJV(),infoJR.getnomJR(),infoJR.getageJR(),infoJR.getNiveau());
+				final Jeu jeu = new Jeu( infoJR.getnbrJ(), infoJR.getnbrJR(),infoJR.getnbrJV(),infoJR.getnomJR(),infoJR.getageJR(),infoJR.getNiveau());
 				//jeu.start();
 				/*try {
 					Thread.sleep(100);
@@ -44,9 +44,9 @@ public class ControlerJeu {
 					e1.printStackTrace();
 				}*/
 				
-				Controler controlerJeu = new Controler(jeu);
+				final Controler controlerJeu = new Controler(jeu);
 				MainGraphique mainGraphique = new MainGraphique(controlerJeu);
-	
+				
 				jeu.addObserver(mainGraphique);
 	
 				infoJR.dispose();

@@ -3,7 +3,10 @@ package Vue;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,12 +24,17 @@ import Joueur.JoueurReel;
 import Joueur.JoueurVirtuel;
 import Modele.Jeu;
 
-public class PanelJoueurReel extends JPanel implements Observer {
+public class PanelJoueurReel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	private Jeu jeu;
 	private Controler controler;
 	private JoueurReel joueurR;
 	private PanelProp[] props=new PanelProp[2];
+	private Boolean PjClicked = false;
+
+	//private int iPropChoisi1;
+	
 
 	public PanelJoueurReel(Jeu jeu, Controler controler, JoueurReel joueurR) {
 		super();
@@ -55,7 +63,7 @@ public class PanelJoueurReel extends JPanel implements Observer {
 		for (int i=0;i<2;i++) {
 			this.props[i] = new PanelProp(this.joueurR.getMain().get(i),this.joueurR.getMain().get(i).getIsFaceUp(), this.controler);
 			listProp.add(this.props[i]);
-			//carteProp.faceUp();		
+				
 		}
 		
 		JPanel infoCartes = new JPanel();
@@ -72,10 +80,23 @@ public class PanelJoueurReel extends JPanel implements Observer {
 		this.add(infoCartes);
 		this.add(listProp);		
 	}
+	
+	
+	public PanelProp[] getProps() {
+		return this.props;
+	}
+	
+	
 
-	@Override
+	//@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
-}
+	}
+	
+	public void update() {
+		
+		
+	}
+	
 }

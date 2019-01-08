@@ -46,7 +46,7 @@ public class PanelJoueurVirtuel extends JPanel implements Observer  {
 		for (int i=0;i<2;i++) {
 			this.props[i] = new PanelProp(this.joueurV.getMain().get(i),this.joueurV.getMain().get(i).getIsFaceUp(), this.controler);
 			listProp.add(this.props[i]);
-			//carteProp.faceUp();		
+					
 		}
 		this.add(listProp);
 		
@@ -57,5 +57,11 @@ public class PanelJoueurVirtuel extends JPanel implements Observer  {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public PanelProp[] getProps() {
+		return this.props;
+	}
+	
+	
 
 }

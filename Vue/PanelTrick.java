@@ -25,73 +25,43 @@ private String pathFaceDown;
 private Image background; 
 private Image backgroundUp; 
 private Image backgroundDown;
-private boolean bIsFaceUp; 
-private BufferedImage img; 
+//private boolean bIsFaceUp; 
+private BufferedImage imgUp;
+private BufferedImage imgDown; 
 
 public PanelTrick (Trick t,Controler ctrl) {
-this.controler =ctrl;
-this.carte = t;
+	this.controler =ctrl;
+	this.carte = t;
 
-pathFaceUp = this.carte.getsimage(t.getValeur());
-pathFaceDown = "image/TrickVerso.PNG";
-
-BufferedImage imgUp = null;
-try {
-imgUp = ImageIO.read(new File(this.pathFaceUp));
-
-} catch (IOException e) {
-e.printStackTrace();
-}
-//Image FaceUp = img.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
-this.backgroundUp =  imgUp.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
-
-BufferedImage imgDown = null;
-try
-{
-imgDown = ImageIO.read(new File(this.pathFaceDown));
-
-} catch (IOException e) {
-e.printStackTrace();
-}
-this.backgroundDown = imgDown.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
-
-Dimension cardDimension = new Dimension(136, 80);
-this.setMinimumSize(cardDimension);
-this.setMaximumSize(cardDimension);
-this.setPreferredSize(cardDimension);
-this.background = backgroundUp; 
-this.addMouseListener(new MouseListener() {
-
-@Override
-public void mouseReleased(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mousePressed(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mouseExited(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mouseEntered(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mouseClicked(MouseEvent e) {
-}
-});
-
-}
+	this.pathFaceUp = this.carte.getsimage(t.getValeur());
+	this.pathFaceDown = "image/TrickVerso.PNG";
+	
+	this.imgUp = null;
+	try {
+		this.imgUp = ImageIO.read(new File(this.pathFaceUp));
+	
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	//Image FaceUp = img.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+	this.backgroundUp =  imgUp.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+	
+	this.imgDown = null;
+	try
+	{
+	this.imgDown = ImageIO.read(new File(pathFaceDown));
+	
+	} catch (IOException e) {
+	e.printStackTrace();
+	}
+	this.backgroundDown = imgDown.getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+	
+	Dimension cardDimension = new Dimension(136, 80);
+	this.setMinimumSize(cardDimension);
+	this.setMaximumSize(cardDimension);
+	this.setPreferredSize(cardDimension);
+	this.background = backgroundUp; 
+	}
 
 protected void paintComponent(Graphics g) {
 super.paintComponent(g); 
@@ -103,24 +73,21 @@ this.background = this.backgroundDown;
 this.repaint();
 }
 
-public void UpdateTrickP() {
-		this.removeAll();
+public void update() {
+			
+			Trick trickPtable = this.controler.getJeu().gettrickD().get(0);		
+			String path = trickPtable.getsimage(trickPtable.getValeur());
+			
 			try {
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
+				this.background = ImageIO.read(new File(path));
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String path = this.controler.getJeu().mettreAJourLaPile().get(1).getsimage(this.controler.getJeu().mettreAJourLaPile().get(1).getValeur());
-			
-			this.background = ImageIO.read(new File(path));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.validate();
-		this.repaint();
+			this.removeAll();
+			this.repaint();
+			this.validate();
+		
 }
 	
 

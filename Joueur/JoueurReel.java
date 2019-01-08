@@ -1,17 +1,20 @@
 package Joueur;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import Carte.Prop;
 import Carte.Trick;
 import Modele.Jeu;
+import Vue.PanelTrick;
 
 
 public class JoueurReel extends Joueur {
     private double age;
     private Jeu JeuActuel;
-
-    
+    private Trick trickP;
+   
 	public void setCarteMain(Prop carteMain) {
 		this.getMain().add(carteMain);
 	}
@@ -35,7 +38,7 @@ public class JoueurReel extends Joueur {
 		if (ech == 0 || ech == 1) {
 			OK = true;
 		}
-		}
+		} 
 		}
 		if (ech == 0) {
 			return true; 
@@ -65,8 +68,13 @@ public class JoueurReel extends Joueur {
 			for (int j=1;j<=k;j++) {
 				System.out.println("==================");
 				System.out.println("Sélectionnez la position de la carte n°"+j+" à ajouter dans votre jeu.");
-				Scanner sc = new Scanner(System.in);
-				int pos = sc.nextInt()-1-p;
+				try {
+					this.JeuActuel.pause();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				int pos = this.JeuActuel.getiPropFinTour();
 				if (pos>=0 && pos <k1) {
 					p++;
 					this.setCarteMain(props.get(pos));
@@ -111,8 +119,8 @@ public class JoueurReel extends Joueur {
 		else {
 			while (OK == false) {
 				System.out.println("Choisissez une carte à montrer (entrer une position)");
-				Scanner sc = new Scanner(System.in);
-				int choixProp = sc.nextInt() - 1;
+				this.JeuActuel.getiPropFinTour();
+				int choixProp = this.JeuActuel.getiPropFinTour();
 				System.out.println("==================");
 				if (this.getMain().get(choixProp).getIsFaceUp()==false) {
 					this.getMain().get(choixProp).setIsFaceUp(true);
@@ -133,38 +141,60 @@ public class JoueurReel extends Joueur {
 		while (OK == false) {
 		
 		System.out.println(this.getTrickARealiser().get(0).toString());
-		System.out.println("Voulez-vous réaliser ce tour ? (Oui ou Non)");	
-		//Scanner sc = new Scanner(System.in);
-		//String reponse = sc.nextLine(); 
-		//char rep = reponse.charAt(0);
+		System.out.println("Voulez-vous réaliser ce Trick ?");	
+			
 		this.JeuActuel.FlipTrick();
-		if (this.JeuActuel.getBChoixTrick()) {
+		
+		
+		if (this.JeuActuel.getbChoixTrick()) {
+			
 			System.out.println("=====================");
 			System.out.println("Le nouveau tour est donc :");
 			System.out.println(this.getTrickARealiser().get(1).toString());
+			
 			this.setChoixTrick(1);
 			trickChoix = true;
 			OK = true;
+			this.JeuActuel.updateTrickGraphic(); 
 		}
 		else  {
 			System.out.println("=====================");
 			System.out.println("Le tour à réaliser est donc ");
 			System.out.println(this.getTrickARealiser().get(0).toString());
+			
+			
 			this.setChoixTrick(0);
 			trickChoix = false;
 			OK = true;
+			
+		}
+		
+		
+		this.JeuActuel.setChanged();
+		this.JeuActuel.notifyObservers("ChoisirProp");
+		try {
+			this.JeuActuel.pause();
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
 		}
 		this.JeuActuel.setChanged();
 		this.JeuActuel.notifyObservers("Change the TrickPile");
-		/*else {
-			System.out.println("Vous avez mal répondu.");
-			OK = false;
-		}*/
+	
+			
+		
+		
+		try {
+			this.JeuActuel.pause();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		
 		}
  
 		System.out.println("=====================");
-		//this.getJeuActuel().setChanged(); 
-		//this.getJeuActuel().notifyObservers("Changer Trick A Faire");
+		
+	
 		return trickChoix;
 	}
 
@@ -175,45 +205,69 @@ public class JoueurReel extends Joueur {
 		valeurs = new Object[4];
 		valeurs[0] = this.getNom();
 		System.out.println(this.afficherMain());
+		
+		if (this.getVariante() != 2) {
+			//System.out.println("Quel prop voulez-vous échanger ?");
+			
 		boolean OK = false;
 		while (OK==false) {
 			
-			if (this.getVariante() != 2) {
-			System.out.println("Quel prop voulez-vous échanger ?");
+			this.JeuActuel.continu();
 			System.out.println("\nEntrer la position de la carte à échanger avec un notre joueur");
-			Scanner sc = new Scanner(System.in);
-			int rep = sc.nextInt()-1;
+			//Scanner sc = new Scanner(System.in);
+			//int rep = sc.nextInt()-1;
+			
+			int rep = this.JeuActuel.getiPropChoisi1();
+			//this.JeuActuel.continu();;
+			//System.out.println("valeur 1   " +rep);
 			if (rep < this.getMain().size() && rep >= 0) {
 			valeurs[1] = rep;
 			}
-			}
+			
 			else {
 				valeurs[1] =0;
 			}
-			System.out.println("Choisissez l'adversaire avec qui échanger votre prop");
-			Scanner sc1 = new Scanner(System.in);
-			String rep1 = sc1.nextLine();
+			this.JeuActuel.ChoisirAdversaire();
+			try {
+				this.JeuActuel.pause();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println(valeurs[1]);
 			
+			//Scanner sc1 = new Scanner(System.in);
+			//String rep1 = sc1.nextLine();
+			
+			//System.out.println(rep1);
+			// valeur iAdversaire from Mouse Clique
+			String rep1 = this.JeuActuel.getNomAdversaire();
 			valeurs[2] = (String) rep1;
-			if (this.getVariante() != 2) {
-			System.out.println("\nEntrer la position de la carte à choisir chez le joueur sélectionné");
-			Scanner sc2 = new Scanner(System.in);
-			int rep2 = sc2.nextInt()-1;
-			if (rep2 < this.getMain().size() && rep2 >= 0) {
+			//if (this.getVariante() != 2) {
+			//System.out.println("\nEntrer la position de la carte à choisir chez le joueur sélectionné");
+			
+			//Scanner sc2 = new Scanner(System.in);
+			//int rep2 = sc2.nextInt()-1;
+			int rep2 = this.JeuActuel.getiPropChoisi2();
+			System.out.println(rep2);
+			//if (rep2 < this.getMain().size() && rep2 >= 0) {
 				valeurs[3] = rep2;
 				OK = true;
-				}
-			}
-			else {
+				//}
+			//}
+			/*else {
 				valeurs[3] = 0;
 				OK = true;
-			}
+			}*/
 			
 		}
 		
-		return valeurs;
+		
 		}
-
+		
+		return valeurs;
+		
+	}
 		
 		
 		
@@ -238,7 +292,7 @@ public class JoueurReel extends Joueur {
 		this.age = age;
 	}
 
-
+	
     
 
 }

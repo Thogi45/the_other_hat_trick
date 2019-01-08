@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import Carte.Prop;
 import Controler.Controler;
+import Joueur.JoueurReel;
+import Joueur.JoueurVirtuel;
 
 public class PanelProp extends JPanel {
 private Controler controler;
@@ -26,6 +28,7 @@ private Image backgroundDown;
 private String pathFaceDown;
 private String nomProp;
 private Boolean isFaceUp;
+private Boolean PpChoisi = false;
 
 public PanelProp (Prop p, Boolean isFaceUp, Controler ctrl) {
 this.controler =ctrl;
@@ -61,40 +64,9 @@ this.setPreferredSize(cardDimension);
 
 this.background = this.backgroundDown;
 
-
-
-this.addMouseListener(new MouseListener() {
-
-@Override
-public void mouseReleased(MouseEvent e) {
-// TODO Auto-generated method stub
-
 }
 
-@Override
-public void mousePressed(MouseEvent e) {
-// TODO Auto-generated method stub
 
-}
-
-@Override
-public void mouseExited(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mouseEntered(MouseEvent e) {
-// TODO Auto-generated method stub
-
-}
-
-@Override
-public void mouseClicked(MouseEvent e) {
-}
-});
-
-}
 public String getNomProp() {
 	return this.carte.getNomP();
 }
@@ -112,4 +84,49 @@ public void faceUp() {
 this.background = this.backgroundUp;
 this.repaint();
 }
+
+	public Boolean getPpropChoisi() {
+		return this.PpChoisi;
+	}
+	
+	public void UpdateTrickR() {
+		this.removeAll();
+			try {
+			
+			int iPropChoisi1 = this.controler.getJeu().getiPropChoisi1();
+			System.out.println("gia tri "+ iPropChoisi1);
+			
+			JoueurReel joueurR = this.controler.getJeu().getJoueurR().get(0);
+			Prop prop =  joueurR.getMain().get(iPropChoisi1);
+			
+			String path = prop.getsimage(prop.getValeur());
+			
+			this.background = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.validate();
+		this.repaint();
+}
+	public void UpdateTrickV() {
+		this.removeAll();
+			try {
+			
+			int iPropChoisi2 = this.controler.getJeu().getiPropChoisi2();
+			int iAdversaireChoisi = this.controler.getJeu().getiAdversaire();		
+			JoueurVirtuel joueurV = this.controler.getJeu().getJoueurV().get(iAdversaireChoisi);
+			Prop prop =  joueurV.getMain().get(iPropChoisi2);
+			String path = prop.getsimage(prop.getValeur());
+			
+			this.background = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.validate();
+		this.repaint();
+}
+	
+ 
 }

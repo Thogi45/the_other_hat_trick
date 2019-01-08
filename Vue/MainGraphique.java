@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -25,10 +27,10 @@ public class MainGraphique implements Observer {
 		private Controler controler;
 		private JFrame frame;
 		private TableTrick panelNorth;
-		private JPanel panelWest;
-		private JPanel panelEast;
+		private PanelJoueurVirtuel panelWest;
+		private PanelJoueurVirtuel panelEast;
 		private JPanel panelCenter;
-		private JPanel panelSouth;
+		private PanelJoueurReel panelSouth;
 		private PanelJoueurVirtuel panelLeft;
 		
 
@@ -107,44 +109,283 @@ public class MainGraphique implements Observer {
 
 		@Override
 		public void update(Observable o, Object arg) {
+			//String message;
 			// TODO Auto-generated method stub
+			if (arg instanceof String) {
 			String message = (String) arg; 
 			if (message == "FlipTrick") {
 				int reponse = JOptionPane.showConfirmDialog(this.frame,"Voulez-vous réaliser ce tour ? (Oui ou Non)","Choisir Trick", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				System.out.println(reponse);
 				if (reponse == JOptionPane.YES_OPTION) {
-					this.jeu.setBChoixtrick(true);
-					
+					//this.jeu.setBChoixtrick(true);
+					this.controler.FlipTrick(); 
 				}
 				if (reponse == JOptionPane.NO_OPTION) {
-					this.jeu.setBChoixtrick(false);
+					//this.jeu.setBChoixtrick(false);
+					this.controler.NoFlipTrick();
+				}
+					
+			}else if (message == "update TableTrick") {
+				this.panelNorth.getTrickP().update();
+				
+			
+			}else if (message == "ChoisirProp") {
+				JOptionPane jOp = new JOptionPane();
+				jOp.showMessageDialog(this.frame," Choissisez-vous 1 prop pour échanger", "Changer Props", JOptionPane.INFORMATION_MESSAGE);
+				this.panelSouth.getProps()[0].addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						//controler.setiropChoisi1(0); 
+						jeu.setiPropChoisi1(0);
+						jeu.continu();
+					}
+					public void mouseEntered(MouseEvent e) {}
+
+					@Override
+					public void mouseExited(MouseEvent e) {}
+
+					@Override
+					public void mousePressed(MouseEvent e) {}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {}
+				});
+				this.panelSouth.getProps()[1].addMouseListener(new MouseListener() {
+						@Override
+					public void mouseClicked(MouseEvent e) {
+							// TODO Auto-generated method stub
+							jeu.setiPropChoisi1(1);
+							jeu.continu();
+						}
+						@Override
+					public void mouseEntered(MouseEvent e) {}
+
+						@Override
+					public void mouseExited(MouseEvent e) {}
+
+						@Override
+					public void mousePressed(MouseEvent e) {}
+
+						@Override
+					public void mouseReleased(MouseEvent e) {}
+				});		
+					this.controler.getJeu().continu();
+				
+			}else if (message == "Choisir Adversaire") {
+				JOptionPane jOp = new JOptionPane();
+				jOp.showMessageDialog(this.frame," Choissisez-vous un autre prop de votre adversaire pour échanger", "Changer Props", JOptionPane.INFORMATION_MESSAGE);
+				// joueur1 carte 0
+				this.panelEast.getProps()[0].addMouseListener(new MouseListener() {
+
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							// TODO Auto-generated method stub
+							jeu.setNomAdversaire("ordi 2");
+							jeu.setiAdversaire(1);
+							jeu.setiPropChoisi2(0);
+							jeu.continu();
+						}
+						@Override
+						public void mouseEntered(MouseEvent e) {}
+						@Override
+						public void mouseExited(MouseEvent e) {}
+						@Override
+						public void mousePressed(MouseEvent e) {}
+						@Override
+						public void mouseReleased(MouseEvent e) {}
+				});
+				//joueurV 1 carte 1
+				this.panelEast.getProps()[1].addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						jeu.setNomAdversaire("ordi 2");
+						jeu.setiAdversaire(1);
+						jeu.setiPropChoisi2(1);
+						jeu.continu();
+					}
+					@Override
+					public void mouseEntered(MouseEvent e) {}
+
+					@Override
+					public void mouseExited(MouseEvent e) {}
+
+					@Override
+					public void mousePressed(MouseEvent e) {}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {}
+			});
+				// joueurV2 carte 0
+				this.panelWest.getProps()[0].addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						jeu.setNomAdversaire("ordi 1");
+						jeu.setiAdversaire(0);
+						jeu.setiPropChoisi2(0);
+						jeu.continu();
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				
+			});
+				//joueurV 2 carte 1
+				this.panelWest.getProps()[1].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						jeu.setNomAdversaire("ordi 1");
+						jeu.setiAdversaire(0);
+						jeu.setiPropChoisi2(1);
+						jeu.continu();
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				
+				
+			});
+				this.controler.getJeu().continu();
+			
+				
+			
+			}
+			else if (message == "Update Cartes Prop"){
+				System.out.println("dm in carte ra");
+				this.panelSouth.getProps()[this.controler.getJeu().getiPropChoisi1()].UpdateTrickV();
+				this.panelEast.getProps()[this.controler.getJeu().getiPropChoisi2()].UpdateTrickR();
+				this.panelWest.getProps()[this.controler.getJeu().getiPropChoisi2()].UpdateTrickR();
+		
+				
+				
+				this.controler.getJeu().continu();
+			}
+			else if ( message == "Info Changer Cartes")
+				if (this.controler.getJeu().getreussi() == true) {
+					JOptionPane jOp = new JOptionPane();
+					jOp.showMessageDialog(this.frame,"BRAVO! Vous avez réussi! Choissier la prop à changer avec le centre", "Info Changer Cartes", JOptionPane.INFORMATION_MESSAGE);
 					
 				}
-				
+				else {
+					JOptionPane jOp = new JOptionPane();
+					jOp.showMessageDialog(this.frame,"Vous avez échoué! Choissier la prop à montrer", "Info Changer Cartes", JOptionPane.INFORMATION_MESSAGE);
 				}
-			else if (message == "Change the TrickPile") {
-				System.out.println(this.controler.getJeu().mettreAJourLaPile().get(1).getNomtrick());
-				System.out.println("ready to repain");
-				this.panelNorth.getTrickP().UpdateTrickP();
 				
-				System.out.println("repained");
-				try {
-					Thread.sleep(200);
-					} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				this.panelSouth.getProps()[0].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						jeu.setiPropFinTour(0);
 					}
-			}
-			else if (message == "ChooseProp") {
-				JOptionPane jOp = new JOptionPane();
-				jOp.showConfirmDialog(this.frame," Quel prop voulez-vous échanger ?", "Changer Props", JOptionPane.INFORMATION_MESSAGE);
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
 				
-			}
-			}
+				
+			});
+				this.panelSouth.getProps()[1].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						jeu.setiPropFinTour(1);
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				
+				
+			});
+				//this.controler.getJeu().continu();
 			
-		}
-		
-		
+			
+		} 
+			
+		}	
+		}	
 
 
 	

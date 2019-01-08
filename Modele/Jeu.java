@@ -54,8 +54,27 @@ public class Jeu  extends Observable implements Runnable {
     private ArrayList<JoueurVirtuel> joueurV = new ArrayList<JoueurVirtuel> ();
     
     private ArrayList<JoueurReel> joueurR = new ArrayList<JoueurReel>();
+    private boolean waitForIt;
     
-    private boolean BChoixTrick; 
+    private boolean bChoixTrick;
+
+	private int iPropChoisi1;
+
+	private String nomAdversaire;
+
+	private int iPropChoisi2;
+
+	private int iAdversaire;
+	private int iJoueurEncour;
+
+	private boolean doIt;
+
+	private boolean reussi;
+
+	protected int iPropFinTour;
+
+	private Trick trickPtable;
+	
     public Jeu getJeu() {
     	return this;
     }
@@ -121,7 +140,7 @@ public class Jeu  extends Observable implements Runnable {
 	}
 
 	public ArrayList<Trick> gettrickD() {
-		return trickD;
+		return this.trickD;
 	}
 
 	public void settrickD(ArrayList<Trick> trickD) {
@@ -381,7 +400,7 @@ public class Jeu  extends Observable implements Runnable {
 				this.joueur.get(j+1).setEstPremierAJouer(true);
 			}
 		}
-		
+		boolean b;
 		this.piocherUneCarteTrick(this.joueur.get(j).setTrickARealiser(this.mettreAJourLaPile()));
 		this.gererActionsDeJeu(j);
 		return j;
@@ -418,6 +437,7 @@ public class Jeu  extends Observable implements Runnable {
 		}
 		if (this.finPartie == false) {
 		this.commencer();
+		
 		}
 		else {
 			this.gererFinDePartie();
@@ -428,7 +448,7 @@ public class Jeu  extends Observable implements Runnable {
 	 * @return the trickP
 	 */
 	public ArrayList<Trick> getTrickP() {
-		return trickP;
+		return this.trickP;
 	}
 
 	public void ajouterProps(Object[] infosSwitch) {
@@ -462,6 +482,7 @@ public class Jeu  extends Observable implements Runnable {
 	public void switcherProps(Object[] infosSwitch) {
 		String joueurActuel = (String) infosSwitch[0];
 		String joueurEchange = (String) infosSwitch[2];
+		
 		int A = 0;
 		int E = 0;
 		int posPropJA = (int) infosSwitch[1];
@@ -482,7 +503,11 @@ public class Jeu  extends Observable implements Runnable {
 		System.out.println("==================");
 		System.out.println(this.joueur.get(A).afficherMain());
 		
+		
+		
 		this.testerTrick(A);
+		
+		
 	}
 	
 	public void gererFinDePartie() {
@@ -547,6 +572,15 @@ public class Jeu  extends Observable implements Runnable {
 	}
 	
 	public void testerTrick (int j) {
+		this.setChanged();
+		this.notifyObservers("Update Cartes Props");
+		System.out.println("nhan duoc thong bao");
+		try {
+			this.pause();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int i = this.joueur.get(j).getChoixTrick();
 		Trick trickEnJeu = this.joueur.get(j).getTrickARealiser().get(i);
 		ArrayList<Prop> mainJoueur = new ArrayList<Prop>();
@@ -563,17 +597,48 @@ public class Jeu  extends Observable implements Runnable {
 		boolean OK2 = false;
 		Iterator<Prop> itMain2 =  mainJoueur.iterator();
 		if (OK == true) {
+			
 			while (itMain2.hasNext() && OK2 == false) {
 				if (trickEnJeu.getProp2().contains(itMain2.next())) {
+					
 					OK2 = true;
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
 				}
 			}
 		
 		}
 		if (OK2 == true) {
+			this.reussi = true;
 			System.out.println("==================");
 			System.out.println("BRAVO, vous avez réussi !");
 			System.out.println("==================");
+			/*
+			 * notify info
+			 */
+			
+			this.setChanged();
+			this.notifyObservers("Info Changer Cartes");
+			try {
+				this.pause();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//
+			try {
+				this.pause();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			this.joueur.get(j).addTrickRealises(trickEnJeu);
 			this.trickP.remove(this.trickP.size()-1);
 			this.prop = this.joueur.get(j).melangerPropsCentre(this.prop);
@@ -582,10 +647,32 @@ public class Jeu  extends Observable implements Runnable {
 			}
 		}
 		else {
+			this.reussi = false;
 			this.gererVariante(this.variante, j);
 			System.out.println("==================");
 			System.out.println("Vous avez échoué");
 			System.out.println("==================");
+			/*
+			 * notify info
+			 */
+			
+
+			this.setChanged();
+			this.notifyObservers("Info Changer Cartes");
+			try {
+				this.pause();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//
+			try {
+				this.pause();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			if (this.finPartie == false) {
 			this.joueur.get(j).retournerCarte();
 			}
@@ -649,14 +736,18 @@ public class Jeu  extends Observable implements Runnable {
 		else {
 		}
 	}
-	
+	public void changeTrick() {
+		if (this.trickD.size() != 0)	
+			this.trickP.add(this.trickP.get(0)); 
+			this.trickD.remove(0);
+	}
 	public ArrayList<Trick> mettreAJourLaPile() {
 		if (this.trickP.isEmpty()==true) {
-		this.trickP.add(this.trickD.get(0));
-		this.trickD.remove(0);
+			this.trickP.add(this.trickD.get(0));
+			this.trickD.remove(0);
 		}
 		ArrayList<Trick> trickAFaire = new ArrayList<Trick>();
-		trickAFaire.add(this.trickP.get(this.trickP.size()-1));
+		trickAFaire.add(this.trickP.get(0));//this.trickP.size()-1
 		trickAFaire.add(this.trickD.get(0));
 		return trickAFaire;
 		
@@ -681,16 +772,122 @@ public class Jeu  extends Observable implements Runnable {
 		this.setChanged();
 		this.notifyObservers("FlipTrick");
 			}
-	public boolean getBChoixTrick() { 
-		return this.BChoixTrick; 
+	public boolean getbChoixTrick() { 
+		return this.bChoixTrick; 
 	}
 	
-	public void setBChoixtrick(boolean b) {
-		this.BChoixTrick = b;
+	public void setbChoixTrick(boolean b) {
+		this.bChoixTrick = b;
 	}
 	@Override 
 	public synchronized void setChanged() {
 		super.setChanged();
 	}
+	
+	//set:get PropChoisi1 
+	public void  setiPropChoisi1(int iPropChoisi1) {
+		this.iPropChoisi1 = iPropChoisi1;
+		//System.out.println(this.iPropChoisi1);
+	}
+	public int getiPropChoisi1() {
+		return this.iPropChoisi1;
+	}
+	// set get nomAdversairechoisi
+	public void ChoisirAdversaire() {
+		this.setChanged();
+		this.notifyObservers("Choisir Adversaire");
+	}
+	
+	public void setNomAdversaire(String nom) {
+		this.nomAdversaire = nom;
+	}
+	
+	public String getNomAdversaire() {
+		return this.nomAdversaire;
+	}
+	// set get ipropchoisi2
+	public void  setiPropChoisi2(int iPropChoisi2) {
+		this.iPropChoisi2 = iPropChoisi2;
+		//System.out.println(this.iPropChoisi1);
+	}
+	public int getiPropChoisi2() {
+		return this.iPropChoisi2;
+	}
+	
+	// set get iAdversairechoisi
+	
+	
+	public void setiAdversaire(int i) {
+		this.iAdversaire = i;
+	}
+	
+	public int getiAdversaire() {
+		return this.iAdversaire;
+	}
+	
+	public synchronized void pause() throws InterruptedException {
+		this.waitForIt = true;
+		while (this.waitForIt) {
+			this.wait();
+		}
+	}
+	/**
+	 * faire continuer le thread qui fait le pause
+	 */
+	public synchronized void continu() {
+		this.waitForIt = false;
+		this.notifyAll();
+	}
+	
+	public void changerDoIt(boolean b) {
+		doIt=b;
+		this.setChanged();
+		this.notifyObservers();
+	}
+	public boolean getDoIt() {
+		return doIt;
+	}
+	
+	public int getiJoueurEncour () {
+		if (this.joueurEnCours == "ordi 1") {
+			this.iJoueurEncour = 1;
+		}
+		else if ( this.joueurEnCours == "ordi 2") {
+			this.iJoueurEncour = 2;
+				
+		}
+		else {
+			this.iJoueurEncour = 0;
+		}
+		return this.iJoueurEncour;
+	}
+	
+	public boolean getreussi() {
+		return this.reussi;
+	}
 
+	public void setiPropFinTour(int i) {
+		this.iPropFinTour = i;
+		// TODO Auto-generated method stub
+		
+	}
+	public int getiPropFinTour() {
+		return this.iPropFinTour;
+	}
+
+	public void settrickPtable(Trick trickP) {
+		this.trickPtable = trickP;
+		
+	}
+	
+	public Trick gettrickPtable() {
+		return this.trickPtable;
+	}
+
+	public void updateTrickGraphic() {
+		this.setChanged();
+		this.notifyObservers("update TableTrick");
+		
+	}
+	
 }
