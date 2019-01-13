@@ -10,115 +10,29 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Collections;
 
-
+/**
+ * Classe pour initialiser les données du jeu.
+ * @author Thomas Girerd et Thuy Tien Nguyen
+ *
+ */
 public class DemarrageJeu {
 	
+	/**
+	 * Constructeur de DemarrageJeu.
+	 */
     public DemarrageJeu() {
 		super();
 	}
-
-    public int getNbreJoueurs() {
-		return nbreJoueurs;
-	}
-
-	public void setNbreJoueurs(int nbreJoueurs) {
-		this.nbreJoueurs = nbreJoueurs;
-	}
-
-
-	public int getNbreJoueursR() {
-		return nbreJoueursR;
-	}
-
-	public void setNbreJoueursR(int nbreJoueursR) {
-		this.nbreJoueursR = nbreJoueursR;
-	}
-
-	public int getNbreJoueursV() {
-		return nbreJoueursV;
-	}
-
-	public void setNbreJoueursV(int nbreJoueursV) {
-		this.nbreJoueursV = nbreJoueursV;
-	}
-
-	public double getAgeJoueurR() {
-		return ageJoueurR;
-	}
-
-	public void setAgeJoueurR(double ageJoueurR) {
-		this.ageJoueurR = ageJoueurR;
-	}
-
-	public int getRegleChoisie() {
-		return regleChoisie;
-	}
-
-	public void setRegleChoisie(int regleChoisie) {
-		this.regleChoisie = regleChoisie;
-	}
-
-	public Trick getTricksSupp() {
-		return tricksSupp;
-	}
-
-	public void setTricksSupp(Trick tricksSupp) {
-		this.tricksSupp = tricksSupp;
-	}
-
-	public String getNomDesJoueurs() {
-		return nomDesJoueurs;
-	}
-
-	public void setNomDesJoueurs(String nomDesJoueurs) {
-		
-		this.nomDesJoueurs = nomDesJoueurs;
-	}
-
-	public boolean isCreationCarte() {
-		return creationCarte;
-	}
-
-	public void setCreationCarte(boolean creationCarte) {
-		this.creationCarte = creationCarte;
-	}
-
-	public int getNbreCartesCreees() {
-		return nbreCartesCreees;
-	}
-
-	public void setNbreCartesCreees(int nbreCartesCreees) {
-		this.nbreCartesCreees = nbreCartesCreees;
-	}
-
-	public Jeu getJeu() {
-		return jeu;
-	}
-
-	public void setJeu(Jeu jeu) {
-		this.jeu = jeu;
-	}
-	
-	private int nbreJoueurs;
-	
-	private int nbreJoueursR;
-	
-	private int nbreJoueursV;
-
-    private double ageJoueurR;
-
-    private int regleChoisie;
-
-    private Trick tricksSupp;
-
-    private String nomDesJoueurs;
-
-    private boolean creationCarte;
-
-    private int nbreCartesCreees;
     
+    /**
+     * Attribut contenant le jeu. 
+     */
     public Jeu jeu;
-      
+    
+     /**
+      * Cette méthode demande à l'utilisateur de choisir la version du jeu à laquelle il désire jouer. En fonction de son choix, un objet de la classe Jeu est créé avec la variante choisie par l'utilisateur.
+      * Si on décide de jouer avec les rêgles de base, on appelera la méthode CreerJoueurs() de jeu. Sinon, la méthode jouerAvecVariantes() de jeu sera appelée. 
+      */
     public void lancerLeJeu() {
     boolean OK = false;
     this.jeu = new Jeu();

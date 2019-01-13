@@ -4,21 +4,55 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 import Carte.Prop;
 import Carte.Trick;
 import Modele.Jeu;
 import Vue.PanelTrick;
 
 
+
+/**
+ * Classe permettant de gérer les joueurs réels du jeu.
+ * @author Thomas Girerd et Thuy Tien Nguyen
+ *
+ */
+
 public class JoueurReel extends Joueur {
+	/**
+	 * Attribut indiquant l'âge du joueur réel.
+	 */
     private double age;
+
     private Jeu JeuActuel;
     private Trick trickP;
    
+
+    
+    /**
+     * Permet à l'objet joueur réel de connaître la variante sur lequel on joue.
+     */
+    private int variante;
+
+	/**
+	 * Ajouter une nouvelle carte dans la main du joueur. 
+	 * 
+	 * @param carteMain
+	 * 		Carte à ajouter dans la main du joueur. 
+	 */
 	public void setCarteMain(Prop carteMain) {
 		this.getMain().add(carteMain);
 	}
 
+	/**
+	 * Constructeur pour le joueur réel.
+	 * 
+	 * @param age
+	 * 		Age du joueur.
+	 * @param nom
+	 * 		Nom du joueur.
+	 */
 	public JoueurReel(double age, String nom) {
 		super();
 		this.age = age;
@@ -26,6 +60,7 @@ public class JoueurReel extends Joueur {
 		
 	}
 	
+
 	public boolean donnerProp (ArrayList<Prop> propCentre, String echange) {
 		boolean OK = false;
 		int ech = -1;
@@ -48,7 +83,23 @@ public class JoueurReel extends Joueur {
 		}
 		}
 	
+
+	/**
+	 * Méthode permettant, lorsque l'on a réussi son tour, de choisir les nouveaux props que l'on veut dans sa main. 
+	 * 
+	 * @param propCentre
+	 * 		On récupère la collection des props au centre. 
+	 * @return les nouveaux props au centre. 
+	 */
 	public ArrayList<Prop> melangerPropsCentre(ArrayList<Prop> propCentre) {
+		//Si jamais la variante est celle où on combine avec une seule carte dans sa main, alors on supprime la carte que le joueur a en trop en démarrant la méthode. 
+		if (this.getVariante()==2) {
+			this.removeCarteMain(1);
+		System.out.println("=====================");
+		System.out.println("La carte pris au joueur pour la réalisation du trick a ete remise au joueur choisi pour l'échange");
+		System.out.println("=====================");
+		}
+		//On place dans une collection de props toutes les cartes dans la main du joueur et celles dans le prop centre et on les retourne toutes face down.
 		int k = this.getMain().size();
 		ArrayList<Prop> props = propCentre;
 		boolean OK = false;
@@ -59,6 +110,9 @@ public class JoueurReel extends Joueur {
 		for (int i =0; i<props.size();i++) {
 			System.out.println((i+1) + ". " + props.get(i).getNomP());
 		}
+		//On va demander au joueur réel de choisir les cartes qu'il veut dans sa main. 
+		//On lui indique le nombre de cartes qu'il doit choisir
+		//Il doit entrer les positions des cartes qu'il veut
 		int k1 = props.size();
 		int p = 0;
 		System.out.println("==================");
@@ -75,6 +129,9 @@ public class JoueurReel extends Joueur {
 					e.printStackTrace();
 				}
 				int pos = this.JeuActuel.getiPropFinTour();
+				Scanner sc = new Scanner(System.in);
+				//Ce pos permet de mettre à jour la position des cartes dans la collection props après que l'on ait commencer à choisir des cartes. 
+			
 				if (pos>=0 && pos <k1) {
 					p++;
 					this.setCarteMain(props.get(pos));
@@ -85,6 +142,7 @@ public class JoueurReel extends Joueur {
 				OK = true;
 			}
 			else {
+				//On s'assure que les positions entrées sont correctes. 
 				p=0;
 				props.addAll(getMain());
 				for (int i =0; i<props.size();i++) {
@@ -97,10 +155,14 @@ public class JoueurReel extends Joueur {
 		
 	}
 	
+	/**
+	 * Méthode permettant au joueur de retourner une carte de sa main quand il échoue lors de la réalisation d'un Trick. 
+	 */
 	public void retournerCarte() {
 		int j = 0;
 		int pos = 0;
 		boolean OK=false;
+		//On regarde qu'elles sont les cartes déjà retournées et on compte le nombre de cartes.
 		for (int i = 0; i<this.getMain().size();i++) {
 			if (this.getMain().get(i).getIsFaceUp()) {
 				j=j+1;
@@ -108,16 +170,18 @@ public class JoueurReel extends Joueur {
 			else if (this.getMain().get(i).getIsFaceUp()== false) {
 				pos = i;
 			}
-			
+		//Si il y a n-1 cartes retournées alors que le joueur a n cartes dans sa main alors on retourne la dernière carte.
 		}
 		if (j==(this.getMain().size()-1)) {
 			this.getMain().get(pos).setIsFaceUp(true);
 		}
+		//Sinon on indique que toutes les cartes sont déjà retournées. 
 		else if (j == this.getMain().size()) {
 			System.out.println("Vos cartes sont déjà retournées.");
 		}
 		else {
 			while (OK == false) {
+				//On demande au joueur de choisir la carte qu'il décide retourner. 
 				System.out.println("Choisissez une carte à montrer (entrer une position)");
 				this.JeuActuel.getiPropFinTour();
 				int choixProp = this.JeuActuel.getiPropFinTour();
@@ -133,13 +197,25 @@ public class JoueurReel extends Joueur {
 	}
 	}
 	
-	
+	/**
+	 * Le joueur récupère tous les tricks qu'il peut réaliser pendant le tour soit deux tricks possibles. Il en connait un, il choisit s'il veut le faire ou pas. 
+	 * 
+	 * @see Jeu#commencer()
+	 * @see Joueur#setTrickARealiser(ArrayList)
+	 * 
+	 * @param trickARealiser
+	 * 		Collection avec les deux tricks que le joueur peut réaliser. 
+	 * @return Choix du joueur de faire le trick qu'on lui montrer ou alors de découvrir l'autre trick. 
+	 */
 	public boolean setTrickARealiser(ArrayList<Trick> trickARealiser) {
+		//On appelle la méthode dans Joueur.
 		super.setTrickARealiser(trickARealiser);
 		boolean OK = false;
 		boolean trickChoix =false;
+		//Dans le cas où tous les tours de magie sont réussis, il se peut que la taille de la collection des tricks possibles à réaliser soit 1.
+		if (trickARealiser.size()!=1) {
+		//On demande au joueur de choisir s'il décide de réaliser le tour qu'on lui propose ou de voir le prochain.
 		while (OK == false) {
-		
 		System.out.println(this.getTrickARealiser().get(0).toString());
 		System.out.println("Voulez-vous réaliser ce Trick ?");	
 			
@@ -168,8 +244,9 @@ public class JoueurReel extends Joueur {
 			OK = true;
 			
 		}
-		
-		
+		}
+		}
+
 		this.JeuActuel.setChanged();
 		this.JeuActuel.notifyObservers("ChoisirProp");
 		try {
@@ -177,35 +254,50 @@ public class JoueurReel extends Joueur {
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();
-		}
+			}
+
 		this.JeuActuel.setChanged();
 		this.JeuActuel.notifyObservers("Change the TrickPile");
-	
-			
-		
-		
+
 		try {
 			this.JeuActuel.pause();
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
 		
-		}
- 
-		System.out.println("=====================");
 		
-	
-		return trickChoix;
-	}
 
-	
+		System.out.println("=====================");
+		//On retourne le choix du joueur. 
+		return trickChoix;
+
+	}
+		
+
+	/**
+	 * Méthode permettant de choisir quels props on veut échanger et avec quel joueur. 
+	 * 
+	 * @return Tableau d'objets qui retourne le nom des joueurs pour l'échange et la position des cartes pour l'échange. 
+	 */
 
 	public Object[] jouer() {
+		/*On crée un tableau d'objet qui va contenir les informations nécessaires pour le switch. 
+		Création d'un tableau d'objets qui contiendra :
+		 * valeurs[0] : nom du joueur qui joue.
+		 * valeurs[1] : position de la carte du joueur qui joue dont il veut se débarrasser . 
+		 * valeurs[2] : nom du joueur avec qui le joueur qui joue veut échanger un de ses Props. 
+		 * valeurs[3] : position de la carte que le joueur qui joue veut récupérer chez le joueur avec qui il veut échanger son Prop. 
+		*/
 		Object[] valeurs;
 		valeurs = new Object[4];
 		valeurs[0] = this.getNom();
 		System.out.println(this.afficherMain());
-		
+		/*On demande au joueur d'entrer dans l'ordre :
+		* - La position de la carte dont il veut se débarrasser dans sa main.  
+		* - Le joueur avec qui il désire faire l'échange
+		* - La position de la carte qu'il veut et qui appartient au joueur choisi. 
+		* Tout au long de la boucle while, on s'assure que le joueur a bien entré des champs acceptables pour terminer la boucle.
+		*/
 		if (this.getVariante() != 2) {
 			//System.out.println("Quel prop voulez-vous échanger ?");
 			
@@ -213,6 +305,9 @@ public class JoueurReel extends Joueur {
 		while (OK==false) {
 			
 			this.JeuActuel.continu();
+
+
+
 			System.out.println("\nEntrer la position de la carte à échanger avec un notre joueur");
 			//Scanner sc = new Scanner(System.in);
 			//int rep = sc.nextInt()-1;
@@ -260,10 +355,9 @@ public class JoueurReel extends Joueur {
 				OK = true;
 			}*/
 			
-		}
+		}}
 		
-		
-		}
+
 		
 		return valeurs;
 		
@@ -280,14 +374,34 @@ public class JoueurReel extends Joueur {
 		return this.JeuActuel;
 	}
 
+
+
+	/**
+	 * Permet d'envoyer l'état du jeu actuel. 
+	 * @param jeu
+	 * 		Etat du jeu actuel.
+	 */
+
 	public void setJeu(Jeu jeu) {
+		variante = jeu.getVariante();
 		return;
 	}
 	
+	/**
+	 * Méthode pour obtenir l'age du joueur. 
+	 * 
+	 * @return Un double indiquant l'age du joueur.
+	 */
 	public double getAge() {
 		return age;
 	}
 
+	/**
+	 * Setter pour indiquer l'âge du joueur.
+	 * 
+	 * @param age
+	 * 		Double pour indiquer l'âge du joueur.
+	 */
 	public void setAge(double age) {
 		this.age = age;
 	}
